@@ -1,71 +1,75 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { 
+  HomeIcon, 
+  ShoppingBagIcon, 
+  ShoppingCartIcon, 
+  ListBulletIcon,
+  Cog6ToothIcon as CogIcon
+} from '@heroicons/react/24/outline';
 
 const Sidebar: React.FC = () => {
   const router = useRouter();
-  
+  const currentPath = router.pathname;
+
+  // Lista elementów menu
   const menuItems = [
     {
       name: 'Dashboard',
-      icon: 'home',
-      path: '/',
+      icon: <HomeIcon className="w-5 h-5" />,
+      path: '/'
     },
     {
       name: 'Produkty',
-      icon: 'box',
-      path: '/products',
+      icon: <ShoppingBagIcon className="w-5 h-5" />,
+      path: '/products'
     },
     {
       name: 'Zamówienia',
-      icon: 'shopping-cart',
-      path: '/orders',
+      icon: <ShoppingCartIcon className="w-5 h-5" />,
+      path: '/orders'
     },
     {
-      name: 'Opłaty Allegro',
-      icon: 'money-bill',
-      path: '/fees',
+      name: 'Pozycje zamówień',
+      icon: <ListBulletIcon className="w-5 h-5" />,
+      path: '/order-items'
     },
     {
-      name: 'Raporty',
-      icon: 'chart-bar',
-      path: '/reports',
-    },
-    {
-      name: 'Import danych',
-      icon: 'file-import',
-      path: '/import',
-    },
+      name: 'Ustawienia API',
+      icon: <CogIcon className="w-5 h-5" />,
+      path: '/settings'
+    }
   ];
-  
-  const isActive = (path: string) => {
-    return router.pathname === path;
+
+  // Funkcja sprawdzająca, czy dany element jest aktywny
+  const isActive = (path: string): boolean => {
+    return currentPath === path;
   };
-  
+
   return (
-    <aside className="w-64 bg-white shadow-md hidden md:block">
-      <div className="overflow-y-auto py-4 px-3">
-        <ul className="space-y-2">
-          {menuItems.map((item) => (
-            <li key={item.path}>
-              <Link
+    <aside className="bg-white w-64 min-h-screen shadow-md">
+      <div className="p-4">
+        <h2 className="text-xl font-bold text-gray-800">Allegro Profit</h2>
+      </div>
+      
+      <nav className="mt-6">
+        <ul>
+          {menuItems.map((item, index) => (
+            <li key={index}>
+              <Link 
                 href={item.path}
-                className={`flex items-center p-2 text-base font-normal rounded-lg hover:bg-gray-100 ${
-                  isActive(item.path) ? 'bg-gray-100 text-primary' : 'text-gray-700'
+                className={`flex items-center px-6 py-3 text-gray-600 hover:bg-blue-50 hover:text-blue-600 ${
+                  isActive(item.path) ? 'bg-blue-50 text-blue-600 border-r-4 border-blue-600' : ''
                 }`}
               >
-                <span className="w-6 h-6 text-center mr-3">
-                  <i className={`fas fa-${item.icon}`}></i>
-                </span>
-                <span>{item.name}</span>
-                {isActive(item.path) && (
-                  <span className="ml-auto w-1.5 h-6 bg-primary rounded-sm"></span>
-                )}
+                <span className="mr-3">{item.icon}</span>
+                {item.name}
               </Link>
             </li>
           ))}
         </ul>
-      </div>
+      </nav>
     </aside>
   );
 };
