@@ -7,7 +7,8 @@ import baseLinkerService from '../services/baseLinkerService';
  */
 export const getOrders = async (req: Request, res: Response) => {
   try {
-    const dateFrom = parseInt(req.query.date_from as string) || Math.floor(Date.now() / 1000) - 30 * 24 * 60 * 60; // 30 dni wstecz
+    // Ustawiam datę początkową na bardzo odległą przeszłość, aby pobrać wszystkie zamówienia
+    const dateFrom = parseInt(req.query.date_from as string) || 0; // od początku czasu (1970-01-01)
     const dateTo = parseInt(req.query.date_to as string) || Math.floor(Date.now() / 1000);
     const page = parseInt(req.query.page as string) || 1;
     
@@ -160,7 +161,8 @@ export const getOrderDetails = async (req: Request, res: Response) => {
  */
 export const syncOrders = async (req: Request, res: Response) => {
   try {
-    const dateFrom = parseInt(req.query.date_from as string) || Math.floor(Date.now() / 1000) - 30 * 24 * 60 * 60; // 30 dni wstecz
+    // Ustawiam datę początkową na bardzo odległą przeszłość, aby pobrać wszystkie zamówienia
+    const dateFrom = parseInt(req.query.date_from as string) || 0; // od początku czasu (1970-01-01)
     const dateTo = parseInt(req.query.date_to as string) || Math.floor(Date.now() / 1000);
     
     logger.info(`Rozpoczęcie synchronizacji zamówień: dateFrom=${dateFrom}, dateTo=${dateTo}`);

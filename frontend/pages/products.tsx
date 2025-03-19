@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import apiClient from '../utils/apiClient';
 import Layout from '../components/Layout';
 
 interface Product {
@@ -30,7 +30,7 @@ const ProductsPage: React.FC = () => {
     setError('');
     
     try {
-      const response = await axios.get('/api/products');
+      const response = await apiClient.get('/api/products');
       setProducts(response.data.products || []);
     } catch (err: any) {
       setError(`Błąd podczas pobierania produktów: ${err.response?.data?.error || err.message}`);
@@ -46,7 +46,7 @@ const ProductsPage: React.FC = () => {
     setSyncError('');
     
     try {
-      const response = await axios.post('/api/products/sync');
+      const response = await apiClient.post('/api/products/sync');
       setProducts(response.data.products || []);
       setSyncSuccess(true);
       setTimeout(() => setSyncSuccess(false), 3000); // Ukryj komunikat o sukcesie po 3 sekundach
@@ -61,7 +61,7 @@ const ProductsPage: React.FC = () => {
     <Layout title="Produkty | Allegro Profit Analyzer">
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Produkty Magazynowe</h1>
+          <h1 className="text-2xl font-bold">Produkty</h1>
           <button
             onClick={syncProducts}
             disabled={syncLoading}
@@ -104,8 +104,8 @@ const ProductsPage: React.FC = () => {
                   <th className="py-3 px-4 text-left">SKU</th>
                   <th className="py-3 px-4 text-left">EAN</th>
                   <th className="py-3 px-4 text-left">Nazwa produktu</th>
-                  <th className="py-3 px-4 text-right">Średni koszt (PLN)</th>
-                  <th className="py-3 px-4 text-right">Ilość w magazynie</th>
+                  <th className="py-3 px-4 text-right">Średni koszt</th>
+                  <th className="py-3 px-4 text-right">Stan magazynowy</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
@@ -116,9 +116,7 @@ const ProductsPage: React.FC = () => {
                     <td className="py-3 px-4">{product.ean}</td>
                     <td className="py-3 px-4">{product.name}</td>
                     <td className="py-3 px-4 text-right">
-                      {product.average_cost !== null
-                        ? `${parseFloat(product.average_cost.toString()).toFixed(2)} zł`
-                        : '-'}
+                      {product.average_cost ? `${product.average_cost.toFixed(2)} PLN` : '-'}
                     </td>
                     <td className="py-3 px-4 text-right">{product.stock}</td>
                   </tr>

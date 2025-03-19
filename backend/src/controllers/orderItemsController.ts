@@ -69,7 +69,8 @@ export const getOrderItems = async (req: Request, res: Response) => {
  */
 export const getAllOrderItems = async (req: Request, res: Response) => {
   try {
-    const dateFrom = parseInt(req.query.date_from as string) || Math.floor(Date.now() / 1000) - 30 * 24 * 60 * 60; // 30 dni wstecz
+    // Ustawiam datę początkową na bardzo odległą przeszłość, aby pobrać wszystkie zamówienia
+    const dateFrom = parseInt(req.query.date_from as string) || 0; // od początku czasu (1970-01-01)
     const dateTo = parseInt(req.query.date_to as string) || Math.floor(Date.now() / 1000);
     
     logger.info(`Pobieranie wszystkich pozycji zamówień: dateFrom=${dateFrom}, dateTo=${dateTo}`);
@@ -139,7 +140,8 @@ export const getAllOrderItems = async (req: Request, res: Response) => {
  */
 export const syncOrderItems = async (req: Request, res: Response) => {
   try {
-    const dateFrom = parseInt(req.query.date_from as string) || Math.floor(Date.now() / 1000) - 30 * 24 * 60 * 60; // 30 dni wstecz
+    // Ustawiam datę początkową na bardzo odległą przeszłość, aby pobrać wszystkie zamówienia
+    const dateFrom = parseInt(req.query.date_from as string) || 0; // od początku czasu (1970-01-01)
     const dateTo = parseInt(req.query.date_to as string) || Math.floor(Date.now() / 1000);
     
     logger.info(`Rozpoczęcie synchronizacji pozycji zamówień: dateFrom=${dateFrom}, dateTo=${dateTo}`);

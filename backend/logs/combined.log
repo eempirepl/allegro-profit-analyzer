@@ -1,1 +1,406 @@
 {"level":"info","message":"Serwer działa na porcie: 3001","service":"allegro-profit-analyzer","timestamp":"2025-03-19T12:59:56.538Z"}
+{"level":"info","message":"Serwer działa na porcie: 3001","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:34:09"}
+{"level":"info","message":"GET /","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:46:24"}
+{"level":"info","message":"GET /","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:46:53"}
+{"level":"info","message":"Serwer działa na porcie: 3001","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:47:18"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:24"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:24"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:24"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:24"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:24"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:24"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:24"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:24"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:25"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:25"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:25"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:25"}
+{"level":"info","message":"POST /api/products/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:26"}
+{"level":"info","message":"Rozpoczęcie synchronizacji produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:26"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:26"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:26"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:26"}
+{"level":"info","message":"Zsynchronizowano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:26"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:28"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739814508, dateTo=1742406508, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:28"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:28"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:28"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:28"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:28"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:28"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739814508, dateTo=1742406508, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:28"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:29"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:29"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:29"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:29"}
+{"level":"info","message":"POST /api/orders/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:31"}
+{"level":"info","message":"Rozpoczęcie synchronizacji zamówień: dateFrom=1739814511, dateTo=1742406511","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:31"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:31"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:31"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:31"}
+{"level":"info","message":"Zsynchronizowano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:31"}
+{"level":"info","message":"GET /api/order-items","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:34"}
+{"level":"info","message":"Pobieranie wszystkich pozycji zamówień: dateFrom=1739814514, dateTo=1742406514","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:34"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:34"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:34"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:34"}
+{"level":"info","message":"Pobrano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:34"}
+{"level":"info","message":"GET /api/order-items","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:34"}
+{"level":"info","message":"Pobieranie wszystkich pozycji zamówień: dateFrom=1739814514, dateTo=1742406514","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:34"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:35"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:35"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:35"}
+{"level":"info","message":"Pobrano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:35"}
+{"level":"info","message":"POST /api/order-items/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:35"}
+{"level":"info","message":"Rozpoczęcie synchronizacji pozycji zamówień: dateFrom=1739814515, dateTo=1742406515","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:35"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:35"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:35"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:35"}
+{"level":"info","message":"Zsynchronizowano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:35"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:36"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:36"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:36"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:36"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:36"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:36"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:36"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:36"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:37"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:37"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:37"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:48:37"}
+{"level":"info","message":"Serwer działa na porcie: 3001","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:49:32"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:02"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:02"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:02"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:02"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:02"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:02"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:02"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:02"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:02"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:02"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:02"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:02"}
+{"level":"info","message":"POST /api/products/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:03"}
+{"level":"info","message":"Rozpoczęcie synchronizacji produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:03"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:03"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:03"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:03"}
+{"level":"info","message":"Zsynchronizowano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:03"}
+{"level":"info","message":"POST /api/products/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:06"}
+{"level":"info","message":"Rozpoczęcie synchronizacji produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:06"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:06"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:06"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:06"}
+{"level":"info","message":"Zsynchronizowano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:06"}
+{"level":"info","message":"POST /api/products/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:07"}
+{"level":"info","message":"Rozpoczęcie synchronizacji produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:07"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:07"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:08"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:08"}
+{"level":"info","message":"Zsynchronizowano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:08"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:09"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739814609, dateTo=1742406609, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:09"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:09"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:09"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:09"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:09"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:09"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739814609, dateTo=1742406609, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:09"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:10"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:10"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:10"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:10"}
+{"level":"info","message":"POST /api/orders/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:10"}
+{"level":"info","message":"Rozpoczęcie synchronizacji zamówień: dateFrom=1739814610, dateTo=1742406610","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:10"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:10"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:10"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:10"}
+{"level":"info","message":"Zsynchronizowano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:10"}
+{"level":"info","message":"GET /api/order-items","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:12"}
+{"level":"info","message":"Pobieranie wszystkich pozycji zamówień: dateFrom=1739814612, dateTo=1742406612","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:12"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:12"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:12"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:13"}
+{"level":"info","message":"Pobrano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:13"}
+{"level":"info","message":"GET /api/order-items","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:13"}
+{"level":"info","message":"Pobieranie wszystkich pozycji zamówień: dateFrom=1739814613, dateTo=1742406613","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:13"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:13"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:13"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:13"}
+{"level":"info","message":"Pobrano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:13"}
+{"level":"info","message":"POST /api/order-items/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:13"}
+{"level":"info","message":"Rozpoczęcie synchronizacji pozycji zamówień: dateFrom=1739814613, dateTo=1742406613","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:13"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:13"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:14"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:14"}
+{"level":"info","message":"Zsynchronizowano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 18:50:14"}
+{"level":"info","message":"Serwer działa na porcie: 3002","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:10:14"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:10:14"}
+{"level":"info","message":"GET / - IP: ::1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:18"}
+{"level":"info","message":"GET /favicon.ico - IP: ::1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:18"}
+{"level":"warn","message":"Próba dostępu do nieistniejącego endpointu: GET /favicon.ico","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:18"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:42"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:42"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:42"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:42"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:42"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:42"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:42"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:42"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:43"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:43"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:43"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:43"}
+{"level":"info","message":"POST /api/products/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:46"}
+{"level":"info","message":"Rozpoczęcie synchronizacji produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:46"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:46"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:46"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:46"}
+{"level":"info","message":"Zsynchronizowano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:13:46"}
+{"level":"info","message":"Serwer działa na porcie: 3002","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:14:46"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:14:46"}
+{"level":"info","message":"Serwer działa na porcie: 3002","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:22:27"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:22:27"}
+{"level":"info","message":"Serwer działa na porcie: 3002","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:22:45"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:22:45"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:08"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:08"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:08"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:08"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:08"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:08"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:08"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:08"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:08"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:08"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:08"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:08"}
+{"level":"info","message":"POST /api/products/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:10"}
+{"level":"info","message":"Rozpoczęcie synchronizacji produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:10"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:10"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:10"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:10"}
+{"level":"info","message":"Zsynchronizowano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:10"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:13"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739816593, dateTo=1742408593, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:13"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:13"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:13"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:13"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:13"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:13"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739816593, dateTo=1742408593, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:13"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:14"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:14"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:14"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:14"}
+{"level":"info","message":"POST /api/orders/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:16"}
+{"level":"info","message":"Rozpoczęcie synchronizacji zamówień: dateFrom=1739816596, dateTo=1742408596","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:16"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:17"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:17"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:17"}
+{"level":"info","message":"Zsynchronizowano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:17"}
+{"level":"info","message":"GET /api/order-items","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:18"}
+{"level":"info","message":"Pobieranie wszystkich pozycji zamówień: dateFrom=1739816598, dateTo=1742408598","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:18"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:18"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:18"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:18"}
+{"level":"info","message":"Pobrano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:18"}
+{"level":"info","message":"GET /api/order-items","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:18"}
+{"level":"info","message":"Pobieranie wszystkich pozycji zamówień: dateFrom=1739816598, dateTo=1742408598","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:18"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:18"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:18"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:18"}
+{"level":"info","message":"Pobrano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:18"}
+{"level":"info","message":"POST /api/order-items/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:19"}
+{"level":"info","message":"Rozpoczęcie synchronizacji pozycji zamówień: dateFrom=1739816599, dateTo=1742408599","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:19"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:19"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:19"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:19"}
+{"level":"info","message":"Zsynchronizowano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:23:19"}
+{"level":"info","message":"Serwer działa na porcie: 3002","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:24:07"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:24:07"}
+{"level":"info","message":"GET / - IP: ::1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:24:54"}
+{"level":"info","message":"Serwer działa na porcie: 3002","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:25:50"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:25:50"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:28"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:28"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:28"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:28"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:28"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:28"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:28"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:28"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:28"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:28"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:28"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:28"}
+{"level":"info","message":"POST /api/products/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:29"}
+{"level":"info","message":"Rozpoczęcie synchronizacji produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:29"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:29"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:29"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:29"}
+{"level":"info","message":"Zsynchronizowano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:29"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:31"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739816791, dateTo=1742408791, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:31"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:32"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:32"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:32"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:32"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:32"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739816792, dateTo=1742408792, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:32"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:32"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:32"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:32"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:32"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:36"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:36"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:36"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:36"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:36"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:36"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:36"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:36"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:37"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:37"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:37"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:37"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:37"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739816797, dateTo=1742408797, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:37"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:37"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:37"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:37"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:37"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:37"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739816797, dateTo=1742408797, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:37"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:38"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:38"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:38"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:26:38"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:26"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:26"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:26"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:27"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:27"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:27"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:27"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:27"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:27"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:27"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:27"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:27"}
+{"level":"info","message":"POST /api/products/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:27"}
+{"level":"info","message":"Rozpoczęcie synchronizacji produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:27"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:28"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:28"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:28"}
+{"level":"info","message":"Zsynchronizowano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:28"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:42"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739818062, dateTo=1742410062, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:42"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:43"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:43"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:43"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:43"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:43"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739818063, dateTo=1742410063, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:43"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:43"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:43"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:43"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:43"}
+{"level":"info","message":"GET /api/order-items","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:45"}
+{"level":"info","message":"Pobieranie wszystkich pozycji zamówień: dateFrom=1739818065, dateTo=1742410065","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:45"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:45"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:45"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:46"}
+{"level":"info","message":"Pobrano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:46"}
+{"level":"info","message":"GET /api/order-items","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:46"}
+{"level":"info","message":"Pobieranie wszystkich pozycji zamówień: dateFrom=1739818066, dateTo=1742410066","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:46"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:46"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:46"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:46"}
+{"level":"info","message":"Pobrano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:46"}
+{"level":"info","message":"GET /api/order-items","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:51"}
+{"level":"info","message":"Pobieranie wszystkich pozycji zamówień: dateFrom=1739818071, dateTo=1742410071","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:51"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:51"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:51"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:51"}
+{"level":"info","message":"Pobrano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:51"}
+{"level":"info","message":"GET /api/order-items","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:51"}
+{"level":"info","message":"Pobieranie wszystkich pozycji zamówień: dateFrom=1739818071, dateTo=1742410071","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:51"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:51"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:51"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:51"}
+{"level":"info","message":"Pobrano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:51"}
+{"level":"info","message":"POST /api/order-items/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:55"}
+{"level":"info","message":"Rozpoczęcie synchronizacji pozycji zamówień: dateFrom=1739818075, dateTo=1742410075","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:55"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:55"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:55"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:55"}
+{"level":"info","message":"Zsynchronizowano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:47:55"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:36"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739818236, dateTo=1742410236, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:36"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:36"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:36"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:36"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:36"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:36"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739818236, dateTo=1742410236, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:36"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:37"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:37"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:37"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:37"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:40"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:40"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:41"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:41"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:41"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:41"}
+{"level":"info","message":"GET /api/products","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:41"}
+{"level":"info","message":"Pobieranie produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:41"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:41"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:41"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:41"}
+{"level":"info","message":"Pobrano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:41"}
+{"level":"info","message":"POST /api/products/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:42"}
+{"level":"info","message":"Rozpoczęcie synchronizacji produktów magazynowych z inventoryId=33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:42"}
+{"level":"info","message":"Wywołanie BaseLinker API: getInventoryProductsList","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:42"}
+{"level":"info","message":"Pobrano 0 ID produktów z magazynu 33644 (strona 1)","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:42"}
+{"level":"info","message":"Nie znaleziono produktów w magazynie 33644","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:42"}
+{"level":"info","message":"Zsynchronizowano 0 produktów magazynowych","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:42"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:45"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739818245, dateTo=1742410245, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:45"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:45"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:45"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:45"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:45"}
+{"level":"info","message":"GET /api/orders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:45"}
+{"level":"info","message":"Pobieranie zamówień: dateFrom=1739818245, dateTo=1742410245, page=1","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:45"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:45"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:45"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:45"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:45"}
+{"level":"info","message":"POST /api/orders/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:46"}
+{"level":"info","message":"Rozpoczęcie synchronizacji zamówień: dateFrom=1739818246, dateTo=1742410246","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:46"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:46"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:46"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:46"}
+{"level":"info","message":"Zsynchronizowano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:46"}
+{"level":"info","message":"GET /api/order-items","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:47"}
+{"level":"info","message":"Pobieranie wszystkich pozycji zamówień: dateFrom=1739818247, dateTo=1742410247","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:47"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:47"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:47"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:47"}
+{"level":"info","message":"Pobrano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:47"}
+{"level":"info","message":"GET /api/order-items","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:47"}
+{"level":"info","message":"Pobieranie wszystkich pozycji zamówień: dateFrom=1739818247, dateTo=1742410247","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:47"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:48"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:48"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:48"}
+{"level":"info","message":"Pobrano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:48"}
+{"level":"info","message":"POST /api/order-items/sync","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:48"}
+{"level":"info","message":"Rozpoczęcie synchronizacji pozycji zamówień: dateFrom=1739818248, dateTo=1742410248","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:48"}
+{"level":"info","message":"Wywołanie BaseLinker API: getOrders","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:49"}
+{"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:49"}
+{"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:49"}
+{"level":"info","message":"Zsynchronizowano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:49"}

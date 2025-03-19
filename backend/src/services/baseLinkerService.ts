@@ -46,6 +46,7 @@ const makeBaseLinkerRequest = async (method: string, parameters: Record<string, 
     return await limiter.schedule(() => {
       logger.info(`Wywołanie BaseLinker API: ${method}`);
       
+      // Tworzymy parametry zgodnie z dokumentacją BaseLinker
       const params = new URLSearchParams();
       params.append('token', config.baseLinkerToken);
       params.append('method', method);
@@ -53,6 +54,8 @@ const makeBaseLinkerRequest = async (method: string, parameters: Record<string, 
       if (Object.keys(parameters).length > 0) {
         params.append('parameters', JSON.stringify(parameters));
       }
+      
+      logger.info(`Parametry zapytania: ${JSON.stringify(parameters)}`);
       
       return baseLinkerClient.post('', params);
     });
@@ -98,18 +101,20 @@ export const getExchangeRates = async (): Promise<Record<string, number>> => {
  */
 export const getOrders = async (dateFrom: number, dateTo: number, page = 1) => {
   try {
+    // Używamy parametrów zgodnych z przykładowym kodem, który działa
     const parameters = {
-      date_from: dateFrom,
-      date_to: dateTo,
-      get_unconfirmed_orders: true,
+      // Używamy date_confirmed_from zamiast date_from
+      date_confirmed_from: dateFrom,
+      date_confirmed_to: dateTo,
+      get_unconfirmed_orders: false, // Pobieramy tylko potwierdzone zamówienia
       filter_order_source_id: '',
       filter_order_source: '',
       filter_order_status_id: '',
       filter_order_id: '',
       filter_external_id: '',
-      filter_order_email: '',
-      filter_order_phone: '',
-      filter_order_fullname: '',
+      filter_email: '',
+      filter_phone: '',
+      filter_fullname: '',
       filter_product_id: '',
       filter_product_name: '',
       filter_sku: '',
@@ -117,7 +122,13 @@ export const getOrders = async (dateFrom: number, dateTo: number, page = 1) => {
       page: page
     };
 
+    logger.info(`Pobieranie zamówień: date_confirmed_from=${dateFrom}, date_confirmed_to=${dateTo}, page=${page}`);
     const response = await makeBaseLinkerRequest('getOrders', parameters);
+    
+    if (!response.data.orders) {
+      logger.warn(`Brak zamówień do przetworzenia (odpowiedź BaseLinker: ${JSON.stringify(response.data)})`);
+      return { orders: [] };
+    }
     
     logger.info(`Pobrano ${response.data.orders ? response.data.orders.length : 0} zamówień`);
     return response.data;
@@ -209,8 +220,85 @@ export const getInventoryProductsData = async (productIds: string[], inventoryId
  * Pobiera wszystkie produkty z magazynu BaseLinker (obsługa paginacji)
  * @param inventoryId ID magazynu (opcjonalne)
  */
-export const getAllInventoryProducts = async (inventoryId: string = '33644') => {
+export const getAllInventoryProducts = async (inventoryId: string = '0') => {
   try {
+    // Najpierw spróbujmy pobrać listę magazynów
+    if (inventoryId === '0') {
+      try {
+        const inventoriesResponse = await makeBaseLinkerRequest('getInventories');
+        const inventories = inventoriesResponse.data.inventories || [];
+        
+        if (inventories.length > 0) {
+          logger.info(`Znaleziono ${inventories.length} magazynów: ${inventories.map((inv: any) => `${inv.inventory_id} (${inv.name})`).join(', ')}`);
+          
+          // Jeśli mamy magazyny, pobieramy produkty z każdego z nich
+          let allProductsData: any = { products: {} };
+          
+          for (const inventory of inventories) {
+            try {
+              // Pobieramy produkty z każdego magazynu
+              let page = 1;
+              let hasMoreProducts = true;
+              let inventoryProductIds: string[] = [];
+              
+              // Pobieranie wszystkich ID produktów (paginacja)
+              while (hasMoreProducts) {
+                const response = await getInventoryProductsList(inventory.inventory_id, page);
+                
+                if (response.products && response.products.length > 0) {
+                  // Dodajemy ID produktów do listy
+                  inventoryProductIds = [...inventoryProductIds, ...response.products.map((product: any) => product.id.toString())];
+                  page++;
+                } else {
+                  hasMoreProducts = false;
+                }
+                
+                // Ograniczenie liczby stron (zabezpieczenie przed nieskończoną pętlą)
+                if (page > 100) {
+                  hasMoreProducts = false;
+                }
+              }
+              
+              // Jeśli mamy produkty, pobieramy ich szczegóły
+              if (inventoryProductIds.length > 0) {
+                // Podzielenie na mniejsze bloki, aby nie przekroczyć limitów API
+                const chunkSize = 100;
+                const productChunks = [];
+                
+                for (let i = 0; i < inventoryProductIds.length; i += chunkSize) {
+                  productChunks.push(inventoryProductIds.slice(i, i + chunkSize));
+                }
+                
+                // Pobieranie szczegółów dla każdej partii
+                for (const chunk of productChunks) {
+                  const productsData = await getInventoryProductsData(chunk, inventory.inventory_id);
+                  
+                  // Dodajemy produkty do całkowitego zbioru
+                  allProductsData.products = {
+                    ...allProductsData.products,
+                    ...productsData.products
+                  };
+                }
+              }
+            } catch (error) {
+              logger.error(`Błąd podczas pobierania produktów z magazynu ${inventory.inventory_id}: ${error}`);
+              // Kontynuuj mimo błędu
+            }
+          }
+          
+          logger.info(`Pobrano łącznie ${Object.keys(allProductsData.products).length} produktów z wszystkich magazynów`);
+          return allProductsData;
+        } else {
+          logger.warn('Nie znaleziono żadnych magazynów w koncie BaseLinker');
+          return { products: {} };
+        }
+      } catch (error) {
+        logger.error(`Błąd podczas pobierania listy magazynów: ${error}`);
+        // W przypadku błędu, przekierowujemy do standardowego pobierania
+      }
+    }
+    
+    // Standardowa ścieżka - pobieranie produktów z jednego magazynu
     let allProductIds: string[] = [];
     let page = 1;
     let hasMoreProducts = true;
@@ -225,6 +313,9 @@ export const getAllInventoryProducts = async (inventoryId: string = '33644') => 
         page++;
       } else {
         hasMoreProducts = false;
+        if (page === 1) {
+          logger.info(`Nie znaleziono produktów w magazynie ${inventoryId}`);
+        }
       }
       
       // Ograniczenie liczby stron (zabezpieczenie przed nieskończoną pętlą)
@@ -248,21 +339,22 @@ export const getAllInventoryProducts = async (inventoryId: string = '33644') => 
       const allProductsData: any = { products: {} };
       
       for (const chunk of productChunks) {
-        const chunkData = await getInventoryProductsData(chunk, inventoryId);
-        if (chunkData.products) {
-          allProductsData.products = { ...allProductsData.products, ...chunkData.products };
-        }
+        const productsData = await getInventoryProductsData(chunk, inventoryId);
+        
+        // Dodajemy produkty do całkowitego zbioru
+        allProductsData.products = {
+          ...allProductsData.products,
+          ...productsData.products
+        };
       }
       
-      logger.info(`Pobrano łącznie ${Object.keys(allProductsData.products).length} produktów z magazynu ${inventoryId}`);
+      logger.info(`Pobrano szczegóły dla ${Object.keys(allProductsData.products).length} produktów z magazynu ${inventoryId}`);
       return allProductsData;
+    } else {
+      return { products: {} };
     }
-    
-    logger.info(`Nie znaleziono produktów w magazynie ${inventoryId}`);
-    return { products: {} };
   } catch (error) {
-    const baseLinkerError = error as BaseLinkerError;
-    logger.error(`Błąd podczas pobierania wszystkich produktów z magazynu ${inventoryId}: ${baseLinkerError.message}`);
+    logger.error(`Błąd podczas pobierania wszystkich produktów z magazynów: ${error}`);
     throw error;
   }
 };
@@ -273,28 +365,23 @@ export const getAllInventoryProducts = async (inventoryId: string = '33644') => 
  * @returns Wartość zamówienia
  */
 export const calculateOrderValue = (order: any): number => {
-  if (order.payment_done && order.payment_done > 0) {
+  // Jeśli jest payment_done i jest większe od 0, to zwracamy tę wartość
+  if (order.payment_done && parseFloat(order.payment_done) > 0) {
     return parseFloat(order.payment_done);
   }
   
-  // Obliczanie wartości na podstawie pozycji i dostawy
-  let orderValue = 0;
+  // W przeciwnym razie obliczamy na podstawie produktów i dostawy
+  let total = parseFloat(order.delivery_price || '0');
   
-  // Dodajemy wartość pozycji
-  if (order.products && Array.isArray(order.products)) {
-    orderValue += order.products.reduce((total: number, product: any) => {
-      const price = parseFloat(product.price_brutto) || 0;
-      const quantity = parseInt(product.quantity) || 0;
-      return total + (price * quantity);
-    }, 0);
+  if (order.products && Array.isArray(order.products) && order.products.length > 0) {
+    for (const product of order.products) {
+      const price = parseFloat(product.price_brutto || '0');
+      const quantity = parseInt(product.quantity || '0', 10);
+      total += price * quantity;
+    }
   }
   
-  // Dodajemy koszt dostawy
-  if (order.delivery_price) {
-    orderValue += parseFloat(order.delivery_price);
-  }
-  
-  return orderValue;
+  return total;
 };
 
 /**

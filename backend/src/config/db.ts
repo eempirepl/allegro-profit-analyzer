@@ -23,7 +23,7 @@ const config = {
   
   // Inne ustawienia konfiguracyjne
   environment: process.env.NODE_ENV || 'development',
-  port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3001,
+  port: process.env.PORT ? parseInt(process.env.PORT) : 3001,
 };
 
 interface Product {

@@ -7,7 +7,9 @@ import baseLinkerService from '../services/baseLinkerService';
  */
 export const getProducts = async (req: Request, res: Response) => {
   try {
-    const inventoryId = req.query.inventory_id as string || '33644';
+    // Pobieramy ID magazynu z zapytania lub używamy domyślnego
+    // Prawdopodobnie ID 33644 nie jest poprawne, możemy użyć 0 do pobierania ze wszystkich magazynów
+    const inventoryId = req.query.inventory_id as string || '0';
     
     logger.info(`Pobieranie produktów magazynowych z inventoryId=${inventoryId}`);
     
@@ -48,7 +50,9 @@ export const getProducts = async (req: Request, res: Response) => {
  */
 export const syncProducts = async (req: Request, res: Response) => {
   try {
-    const inventoryId = req.query.inventory_id as string || '33644';
+    // Pobieramy ID magazynu z zapytania lub używamy domyślnego
+    // Prawdopodobnie ID 33644 nie jest poprawne, możemy użyć 0 do pobierania ze wszystkich magazynów
+    const inventoryId = req.query.inventory_id as string || '0';
     
     logger.info(`Rozpoczęcie synchronizacji produktów magazynowych z inventoryId=${inventoryId}`);
     
