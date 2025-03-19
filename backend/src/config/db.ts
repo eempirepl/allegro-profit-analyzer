@@ -2,6 +2,30 @@
 // Tworzy strukturę odpowiadającą PrismaClient z @prisma/client
 // To rozwiązanie tymczasowe do czasu poprawnego wygenerowania klienta Prisma
 
+import dotenv from 'dotenv';
+import { PrismaClient } from '@prisma/client';
+
+// Załaduj zmienne środowiskowe z pliku .env
+dotenv.config();
+
+// Utwórz instancję Prisma Client
+const prisma = new PrismaClient();
+
+// Konfiguracja aplikacji
+const config = {
+  // Token API BaseLinker (pobrany z zmiennych środowiskowych)
+  baseLinkerToken: process.env.BASELINKER_API_TOKEN || '',
+  
+  // Konfiguracja limitu zapytań BaseLinker API
+  baseLinkerApiLimit: {
+    requestsPerMinute: 100, // 100 zapytań na minutę (zgodnie z dokumentacją API)
+  },
+  
+  // Inne ustawienia konfiguracyjne
+  environment: process.env.NODE_ENV || 'development',
+  port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3001,
+};
+
 interface Product {
   id: number;
   externalId?: string;
@@ -153,7 +177,7 @@ class MockPrismaClient {
 import { logger } from '../utils/logger';
 
 // Używamy naszego mocka zamiast prawdziwego PrismaClienta
-const prisma = new MockPrismaClient();
+const mockPrisma = new MockPrismaClient();
 
 interface QueryEvent {
   query: string;
@@ -169,20 +193,20 @@ interface ErrorEvent {
 
 // Log zapytań SQL w trybie development
 if (process.env.NODE_ENV === 'development') {
-  prisma.$on('query', (e: QueryEvent) => {
+  mockPrisma.$on('query', (e: QueryEvent) => {
     logger.debug(`Zapytanie: ${e.query}`);
   });
 }
 
 // Log błędów SQL
-prisma.$on('error', (e: ErrorEvent) => {
+mockPrisma.$on('error', (e: ErrorEvent) => {
   logger.error(`Błąd bazy danych: ${e.message}`);
 });
 
 // Test połączenia z bazą danych
 export const testDatabaseConnection = async (): Promise<boolean> => {
   try {
-    await prisma.$connect();
+    await mockPrisma.$connect();
     logger.info('Połączono z bazą danych');
     return true;
   } catch (error) {
@@ -195,4 +219,5 @@ export const testDatabaseConnection = async (): Promise<boolean> => {
   }
 };
 
-export default prisma; 
+export { prisma };
+export default config; 

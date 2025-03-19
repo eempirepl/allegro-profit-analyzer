@@ -1,15 +1,18 @@
-import { Router } from 'express';
-import { 
-  getBaselinkerData, 
-  syncBaselinkerData 
-} from '../controllers/baselinkerController';
+import express from 'express';
+import baselinkerController from '../controllers/baselinkerController';
 
-const router = Router();
+const router = express.Router();
 
-// Pobierz dane z BaseLinker
-router.get('/data', getBaselinkerData);
+// Trasy dla produktów
+router.get('/products', baselinkerController.getProducts);
+router.get('/products/:productId', baselinkerController.getProductDetails);
 
-// Synchronizuj dane z BaseLinker
-router.post('/sync', syncBaselinkerData);
+// Trasy dla zamówień
+router.get('/orders', baselinkerController.getOrders);
+router.get('/orders/:orderId', baselinkerController.getOrderDetails);
+router.get('/orders/:orderId/items', baselinkerController.getOrderItems);
 
-export const baselinkerRoutes = router; 
+// Trasa do synchronizacji danych
+router.get('/sync', baselinkerController.syncData);
+
+export default router; 

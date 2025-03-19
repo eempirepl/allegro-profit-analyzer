@@ -1,30 +1,51 @@
-import winston from 'winston';
-import dotenv from 'dotenv';
+import { createLogger, format, transports } from 'winston';
+import path from 'path';
 
-dotenv.config();
+// Konfiguracja lokalizacji plików logów
+const logDir = path.join(__dirname, '../../logs');
 
-const logLevel = process.env.LOG_LEVEL || 'info';
+// Konfiguracja formatu logów
+const logFormat = format.combine(
+  format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+  format.errors({ stack: true }),
+  format.splat(),
+  format.json()
+);
 
-export const logger = winston.createLogger({
-  level: logLevel,
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+// Tworzenie loggera z konfiguracją
+export const logger = createLogger({
+  level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
+  format: logFormat,
   defaultMeta: { service: 'allegro-profit-analyzer' },
   transports: [
-    new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple()
-      ),
+    // Zapisywanie wszystkich logów do pliku combined.log
+    new transports.File({ 
+      filename: path.join(logDir, 'combined.log'),
+      level: 'info' 
     }),
-    new winston.transports.File({ 
-      filename: 'logs/error.log', 
+    
+    // Zapisywanie logów błędów do pliku error.log
+    new transports.File({ 
+      filename: path.join(logDir, 'error.log'),
       level: 'error' 
     }),
-    new winston.transports.File({ 
-      filename: 'logs/combined.log' 
-    }),
+    
+    // Wyświetlanie wszystkich logów w konsoli w środowisku deweloperskim
+    new transports.Console({
+      format: format.combine(
+        format.colorize(),
+        format.printf(
+          info => `${info.timestamp} ${info.level}: ${info.message}`
+        )
+      ),
+    })
   ],
-}); 
+  // Obsługa wyjątków niezłapanych
+  exceptionHandlers: [
+    new transports.File({ 
+      filename: path.join(logDir, 'exceptions.log') 
+    })
+  ]
+});
+
+export default logger; 

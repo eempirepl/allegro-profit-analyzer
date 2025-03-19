@@ -5,13 +5,47 @@ import { promisify } from 'util';
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
+const access = promisify(fs.access);
+const mkdir = promisify(fs.mkdir);
 
 // Ścieżka do pliku .env
-const envFilePath = path.resolve(process.cwd(), '../../backend/.env');
+const envFilePath = path.resolve(process.cwd(), '../backend/.env');
+
+// Funkcja sprawdzająca czy plik istnieje
+const fileExists = async (filePath: string): Promise<boolean> => {
+  try {
+    await access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+// Funkcja tworząca plik .env jeśli nie istnieje
+const createEnvFileIfNotExists = async (): Promise<void> => {
+  try {
+    const exists = await fileExists(envFilePath);
+    if (!exists) {
+      // Upewnij się, że katalog backend istnieje
+      const backendDir = path.dirname(envFilePath);
+      try {
+        await access(backendDir);
+      } catch {
+        await mkdir(backendDir, { recursive: true });
+      }
+      // Utwórz pusty plik .env
+      await writeFile(envFilePath, '', 'utf8');
+    }
+  } catch (error) {
+    console.error('Błąd podczas tworzenia pliku .env:', error);
+    throw error;
+  }
+};
 
 // Funkcja do odczytania aktualnego tokenu z pliku .env
 const getTokenFromEnv = async (): Promise<string> => {
   try {
+    await createEnvFileIfNotExists();
     const envData = await readFile(envFilePath, 'utf8');
     const tokenMatch = envData.match(/BASELINKER_API_TOKEN=(.+)/);
     return tokenMatch ? tokenMatch[1].trim() : '';
@@ -24,8 +58,15 @@ const getTokenFromEnv = async (): Promise<string> => {
 // Funkcja do zapisania tokenu do pliku .env
 const saveTokenToEnv = async (token: string): Promise<boolean> => {
   try {
-    // Odczytanie aktualnej zawartości pliku .env
-    const envData = await readFile(envFilePath, 'utf8');
+    await createEnvFileIfNotExists();
+    
+    let envData = '';
+    try {
+      envData = await readFile(envFilePath, 'utf8');
+    } catch {
+      // Jeśli nie można odczytać pliku, zaczniemy od pustego pliku
+      envData = '';
+    }
     
     // Sprawdzenie, czy token już istnieje w pliku
     if (envData.includes('BASELINKER_API_TOKEN=')) {
@@ -37,7 +78,7 @@ const saveTokenToEnv = async (token: string): Promise<boolean> => {
       await writeFile(envFilePath, updatedEnvData, 'utf8');
     } else {
       // Dodanie nowego tokenu na końcu pliku
-      const updatedEnvData = `${envData}\nBASELINKER_API_TOKEN=${token}\n`;
+      const updatedEnvData = envData ? `${envData}\nBASELINKER_API_TOKEN=${token}\n` : `BASELINKER_API_TOKEN=${token}\n`;
       await writeFile(envFilePath, updatedEnvData, 'utf8');
     }
     
