@@ -36,7 +36,13 @@ app.use('/api/allegro', allegroRoutes);
 app.get('/', (req, res) => {
   res.json({
     message: 'Allegro Profit Analyzer API',
-    version: '1.0.0'
+    version: '1.0.0',
+    endpoints: [
+      '/api/products',
+      '/api/orders',
+      '/api/order-items',
+      '/api/baselinker'
+    ]
   });
 });
 

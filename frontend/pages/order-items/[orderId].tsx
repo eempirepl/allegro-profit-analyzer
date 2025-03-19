@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import axios from 'axios';
-import Layout from '../components/Layout';
+import Layout from '../../components/Layout';
 import Link from 'next/link';
 
 interface OrderItem {
@@ -15,18 +16,20 @@ interface OrderItem {
   auction_id: string;
 }
 
-const OrderItemsPage: React.FC = () => {
+const OrderItemsDetailPage: React.FC = () => {
+  const router = useRouter();
+  const { orderId } = router.query;
+  
   const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [syncLoading, setSyncLoading] = useState(false);
-  const [syncSuccess, setSyncSuccess] = useState(false);
-  const [syncError, setSyncError] = useState('');
 
-  // Pobieranie pozycji zamówień przy ładowaniu strony
+  // Pobieranie pozycji zamówienia przy zmianie orderId
   useEffect(() => {
-    fetchOrderItems();
-  }, []);
+    if (orderId) {
+      fetchOrderItems();
+    }
+  }, [orderId]);
 
   // Funkcja pobierająca pozycje zamówień
   const fetchOrderItems = async () => {
@@ -34,45 +37,28 @@ const OrderItemsPage: React.FC = () => {
     setError('');
     
     try {
-      const response = await axios.get('/api/order-items');
+      const response = await axios.get(`/api/order-items/${orderId}`);
       setOrderItems(response.data.order_items || []);
     } catch (err: any) {
-      setError(`Błąd podczas pobierania pozycji zamówień: ${err.response?.data?.error || err.message}`);
+      setError(`Błąd podczas pobierania pozycji zamówienia: ${err.response?.data?.error || err.message}`);
     } finally {
       setLoading(false);
     }
   };
 
-  // Funkcja synchronizująca pozycje zamówień
-  const syncOrderItems = async () => {
-    setSyncLoading(true);
-    setSyncSuccess(false);
-    setSyncError('');
-    
-    try {
-      const response = await axios.post('/api/order-items/sync');
-      setOrderItems(response.data.order_items || []);
-      setSyncSuccess(true);
-      setTimeout(() => setSyncSuccess(false), 3000); // Ukryj komunikat o sukcesie po 3 sekundach
-    } catch (err: any) {
-      setSyncError(`Błąd podczas synchronizacji pozycji zamówień: ${err.response?.data?.error || err.message}`);
-    } finally {
-      setSyncLoading(false);
-    }
-  };
-
   return (
-    <Layout title="Pozycje Zamówień | Allegro Profit Analyzer">
+    <Layout title={`Pozycje Zamówienia ${orderId} | Allegro Profit Analyzer`}>
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Pozycje Zamówień</h1>
-          <button
-            onClick={syncOrderItems}
-            disabled={syncLoading}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
-          >
-            {syncLoading ? 'Synchronizacja...' : 'Synchronizuj Dane'}
-          </button>
+          <div>
+            <Link 
+              href="/orders"
+              className="text-blue-600 hover:text-blue-800 mb-2 inline-block"
+            >
+              &larr; Powrót do zamówień
+            </Link>
+            <h1 className="text-2xl font-bold">Pozycje Zamówienia {orderId}</h1>
+          </div>
         </div>
         
         {/* Komunikaty */}
@@ -82,29 +68,16 @@ const OrderItemsPage: React.FC = () => {
           </div>
         )}
         
-        {syncError && (
-          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
-            {syncError}
-          </div>
-        )}
-        
-        {syncSuccess && (
-          <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-md">
-            Pozycje zamówień zostały pomyślnie zsynchronizowane.
-          </div>
-        )}
-        
         {/* Tabela pozycji zamówień */}
         {loading ? (
           <div className="text-center py-8">
-            <p className="text-gray-500">Ładowanie pozycji zamówień...</p>
+            <p className="text-gray-500">Ładowanie pozycji zamówienia...</p>
           </div>
         ) : orderItems.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md">
               <thead className="bg-gray-200">
                 <tr>
-                  <th className="py-3 px-4 text-left">Zamówienie</th>
                   <th className="py-3 px-4 text-left">ID produktu</th>
                   <th className="py-3 px-4 text-left">Nazwa produktu</th>
                   <th className="py-3 px-4 text-right">Cena brutto</th>
@@ -117,15 +90,7 @@ const OrderItemsPage: React.FC = () => {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {orderItems.map((item, index) => (
-                  <tr key={`${item.order_id}-${item.product_id}-${index}`} className="hover:bg-gray-50">
-                    <td className="py-3 px-4">
-                      <Link 
-                        href={`/orders/${item.order_id}`}
-                        className="text-blue-600 hover:text-blue-800 underline"
-                      >
-                        {item.order_id}
-                      </Link>
-                    </td>
+                  <tr key={`${item.product_id}-${index}`} className="hover:bg-gray-50">
                     <td className="py-3 px-4">
                       <Link 
                         href={`/products?id=${item.product_id}`}
@@ -148,7 +113,7 @@ const OrderItemsPage: React.FC = () => {
           </div>
         ) : (
           <div className="text-center py-8">
-            <p className="text-gray-500">Brak pozycji zamówień do wyświetlenia.</p>
+            <p className="text-gray-500">Brak pozycji dla tego zamówienia.</p>
           </div>
         )}
       </div>
@@ -156,4 +121,4 @@ const OrderItemsPage: React.FC = () => {
   );
 };
 
-export default OrderItemsPage; 
+export default OrderItemsDetailPage; 

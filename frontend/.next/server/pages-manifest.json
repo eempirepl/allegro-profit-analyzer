@@ -2,8 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/settings": "pages/settings.js",
   "/products": "pages/products.js",
-  "/api/settings/token": "pages/api/settings/token.js",
-  "/api/settings/test-connection": "pages/api/settings/test-connection.js"
+  "/orders": "pages/orders.js"
 }
