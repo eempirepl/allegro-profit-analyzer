@@ -1,60 +1,56 @@
 import axios from 'axios';
 import Bottleneck from 'bottleneck';
+import { baseLinkerConfig } from '../config/baseLinkerConfig';
 import { logger } from '../utils/logger';
-import { baseLinkerConfig } from '../config/baseLinker';
-import {
-  BaseLinkerError,
-  BaseLinkerProduct,
-  BaseLinkerOrder,
-  BaseLinkerResponse,
-  ProductsResponseData,
-  OrdersResponseData,
+import { 
+  ProductsResponseData, 
+  OrdersResponseData, 
   OrderDetailsResponseData,
-  GetProductsParams,
-  GetOrdersParams,
-  ProductsResponse
-} from '../types/baseLinker';
-
-// Konfiguracja limitera zapytań na podstawie konfiguracji
-const limiter = new Bottleneck({
-  maxConcurrent: baseLinkerConfig.rateLimit.maxConcurrent,
-  minTime: baseLinkerConfig.rateLimit.minTimeBetweenRequests
-});
+  BaseLinkerError,
+  InventoriesResponseData
+} from '../types/baseLinkerTypes';
 
 class BaseLinkerService {
   private readonly apiUrl: string;
   private readonly token: string;
+  private readonly limiter: Bottleneck;
 
   constructor() {
-    const token = baseLinkerConfig.apiToken;
-    if (!token) {
-      throw new Error('Brak tokenu API BaseLinker');
+    this.token = baseLinkerConfig.apiToken;
+    if (!this.token) {
+      throw new Error('BaseLinker API token is not configured');
     }
-    this.token = token;
+    
     this.apiUrl = baseLinkerConfig.apiUrl;
+    this.limiter = new Bottleneck({
+      maxConcurrent: baseLinkerConfig.maxConcurrentRequests,
+      minTime: baseLinkerConfig.minTimeBetweenRequests
+    });
   }
 
-  // Metoda pomocnicza do wykonywania zapytań do API
   private async makeRequest<T>(method: string, parameters: Record<string, any> = {}): Promise<T> {
     const params = new URLSearchParams();
+    params.append('token', this.token);
     params.append('method', method);
     params.append('parameters', JSON.stringify(parameters));
-    params.append('token', this.token);
 
     try {
       logger.info(`Wywołanie BaseLinker API: ${method}`);
-      const response = await limiter.schedule(() => 
-        axios.post<BaseLinkerResponse<T>>(this.apiUrl, params, {
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        })
-      );
+      logger.info(`Token API: ${this.token ? 'ustawiony' : 'brak'}`);
+      const response = await this.limiter.schedule(() => axios.post(this.apiUrl, params, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }));
+
+      logger.info(`Odpowiedź z BaseLinker API (${method}):`, response.data);
 
       if (response.data.error_code) {
-        const error = response.data as BaseLinkerError;
+        const error = response.data;
         throw new Error(`Błąd BaseLinker API: ${error.error_message || error.error_code}`);
       }
 
-      return response.data.data;
+      return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         logger.error(`Błąd podczas wywołania BaseLinker API (${method}):`, error.response?.data || error.message);
@@ -64,30 +60,23 @@ class BaseLinkerService {
     }
   }
 
-  // Pobieranie listy produktów
-  async getProducts({ page = 1, limit = baseLinkerConfig.defaults.pageSize, inventoryId }: GetProductsParams = {}): Promise<ProductsResponse> {
+  // Pobieranie produktów
+  async getProducts(options: { page?: number; limit?: number; inventoryId?: string } = {}): Promise<ProductsResponseData> {
     try {
-      const parameters = {
-        inventory_id: inventoryId || '',
-        filter_category_id: 0,
-        filter_ean: '',
-        filter_sku: '',
-        filter_name: '',
-        filter_price_from: 0,
-        filter_price_to: 0,
-        filter_quantity_from: 0,
-        filter_quantity_to: 0,
-        filter_sort: 'id-asc',
+      const { page = 1, limit = 100, inventoryId } = options;
+      
+      const parameters: Record<string, any> = {
         page,
         limit
       };
-
+      
+      if (inventoryId) {
+        parameters.inventory_id = inventoryId;
+      }
+      
       const response = await this.makeRequest<ProductsResponseData>('getInventoryProductsList', parameters);
-      logger.info(`Pobrano ${response.products.length} produktów (strona ${page})`);
-      return {
-        status: 'SUCCESS',
-        data: response
-      };
+      logger.info(`Pobrano ${response.data.products.length} produktów`);
+      return response;
     } catch (error) {
       logger.error('Błąd podczas pobierania produktów:', error);
       throw error;
@@ -95,52 +84,42 @@ class BaseLinkerService {
   }
 
   // Pobieranie szczegółów produktu
-  async getProductDetails(productId: string, inventoryId?: string): Promise<BaseLinkerProduct> {
+  async getProductDetails(productId: string, inventoryId?: string): Promise<any> {
     try {
-      const response = await this.makeRequest<{ product: BaseLinkerProduct }>('getInventoryProductData', {
-        inventory_id: inventoryId || '',
+      const parameters: Record<string, any> = {
         product_id: productId
-      });
+      };
+      
+      if (inventoryId) {
+        parameters.inventory_id = inventoryId;
+      }
+      
+      const response = await this.makeRequest<any>('getInventoryProductsData', parameters);
       logger.info(`Pobrano szczegóły produktu ID: ${productId}`);
-      return response.product;
+      return response;
     } catch (error) {
       logger.error(`Błąd podczas pobierania szczegółów produktu ${productId}:`, error);
       throw error;
     }
   }
 
-  // Pobieranie listy zamówień
-  async getOrders({ dateFrom, dateTo, statusId, page = 1, limit = baseLinkerConfig.defaults.pageSize }: GetOrdersParams = {}): Promise<BaseLinkerOrder[]> {
+  // Pobieranie zamówień
+  async getOrders(options: { dateFrom?: number; dateTo?: number; statusId?: number; page?: number; limit?: number } = {}): Promise<OrdersResponseData> {
     try {
-      // Jeśli nie podano zakresu dat, użyj domyślnego (ostatnie X dni)
-      if (!dateFrom) {
-        const defaultDays = baseLinkerConfig.defaults.orderDateRange.days;
-        dateFrom = Math.floor(Date.now() / 1000) - (defaultDays * 24 * 60 * 60);
-      }
-
-      const parameters = {
-        date_from: dateFrom,
-        date_to: dateTo,
-        get_unconfirmed_orders: true,
-        status_id: statusId,
-        filter_order_source_id: '',
-        filter_order_source: '',
-        filter_order_status_id: '',
-        filter_order_id: '',
-        filter_external_id: '',
-        filter_order_email: '',
-        filter_order_phone: '',
-        filter_order_fullname: '',
-        filter_product_id: '',
-        filter_product_name: '',
-        filter_sku: '',
-        filter_sort: 'date_add-asc',
-        page
+      const { dateFrom, dateTo, statusId, page = 1, limit = 100 } = options;
+      
+      const parameters: Record<string, any> = {
+        page,
+        limit
       };
-
+      
+      if (dateFrom) parameters.date_from = dateFrom;
+      if (dateTo) parameters.date_to = dateTo;
+      if (statusId) parameters.status_id = statusId;
+      
       const response = await this.makeRequest<OrdersResponseData>('getOrders', parameters);
       logger.info(`Pobrano ${response.orders.length} zamówień`);
-      return response.orders;
+      return response;
     } catch (error) {
       logger.error('Błąd podczas pobierania zamówień:', error);
       throw error;
@@ -183,7 +162,8 @@ class BaseLinkerService {
       const products = productsResponse.data.products;
       
       // Pobierz zamówienia
-      const orders = await this.getOrders({ dateFrom, dateTo });
+      const ordersResponse = await this.getOrders({ dateFrom, dateTo });
+      const orders = ordersResponse.orders;
       
       // Dla każdego zamówienia pobierz pozycje
       const orderItems = [];
@@ -208,7 +188,7 @@ class BaseLinkerService {
   // Testowanie połączenia z API
   async testConnection(): Promise<boolean> {
     try {
-      await this.makeRequest<ProductsResponseData>('getInventoryProductsList', { page: 1, limit: 1 });
+      await this.makeRequest<InventoriesResponseData>('getInventories', {});
       logger.info('Test połączenia z BaseLinker API: Sukces');
       return true;
     } catch (error) {
@@ -216,7 +196,27 @@ class BaseLinkerService {
       return false;
     }
   }
+
+  // Pobieranie listy magazynów
+  async getInventories(): Promise<InventoriesResponseData['inventories']> {
+    try {
+      logger.info('Rozpoczynam pobieranie listy magazynów');
+      const response = await this.makeRequest<InventoriesResponseData>('getInventories', {});
+      logger.info('Surowa odpowiedź z BaseLinker API:', JSON.stringify(response));
+      
+      if (response && response.inventories) {
+        logger.info(`Pobrano ${response.inventories.length} magazynów`);
+        return response.inventories;
+      } else {
+        logger.error('Błąd w odpowiedzi BaseLinker API:', response);
+        return [];
+      }
+    } catch (error) {
+      logger.error('Błąd podczas pobierania listy magazynów:', error);
+      throw error;
+    }
+  }
 }
 
 // Eksportujemy pojedynczą instancję serwisu
-export const baseLinkerService = new BaseLinkerService(); 
+export const baseLinkerService = new BaseLinkerService();
