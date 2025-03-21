@@ -149,5 +149,33 @@ export const baseLinkerController = {
         error: 'Błąd podczas pobierania listy magazynów' 
       });
     }
+  },
+
+  // Pobieranie szczegółów magazynu
+  async getInventoryDetails(req: Request, res: Response) {
+    try {
+      const inventoryId = parseInt(req.params.id);
+      const inventories = await baseLinkerService.getInventories();
+      
+      const inventory = inventories.find(inv => inv.inventory_id === inventoryId);
+      
+      if (!inventory) {
+        return res.status(404).json({ 
+          success: false, 
+          message: 'Nie znaleziono magazynu o podanym ID' 
+        });
+      }
+      
+      res.json({ 
+        success: true, 
+        data: inventory 
+      });
+    } catch (error) {
+      logger.error('Błąd podczas pobierania szczegółów magazynu:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: 'Wystąpił błąd podczas pobierania szczegółów magazynu' 
+      });
+    }
   }
 }; 

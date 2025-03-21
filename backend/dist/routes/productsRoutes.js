@@ -1,13 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const productsController_1 = __importDefault(require("../controllers/productsController"));
-const router = express_1.default.Router();
-// GET /api/products
-router.get('/', productsController_1.default.getProducts);
-// POST /api/products/sync
-router.post('/sync', productsController_1.default.syncProducts);
+const express_1 = require("express");
+const productsController_1 = require("../controllers/productsController");
+const router = (0, express_1.Router)();
+// Trasy dla produktów
+router.get('/', productsController_1.productsController.getProducts);
+router.get('/:productId', productsController_1.productsController.getProductDetails);
 exports.default = router;

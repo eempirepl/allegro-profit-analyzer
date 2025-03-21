@@ -9,8 +9,7 @@ router.get('/products/:productId', baselinkerController_1.baseLinkerController.g
 // Zamówienia
 router.get('/orders', baselinkerController_1.baseLinkerController.getOrders);
 router.get('/orders/:orderId', baselinkerController_1.baseLinkerController.getOrderDetails);
-router.get('/orders/:orderId/items', baselinkerController_1.baseLinkerController.getOrderItems);
-// Synchronizacja i diagnostyka
-router.get('/sync', baselinkerController_1.baseLinkerController.syncData);
-router.get('/test-connection', baselinkerController_1.baseLinkerController.testConnection);
+// Magazyny
+router.get('/inventories', baselinkerController_1.baseLinkerController.getInventories);
+router.get('/inventories/:inventoryId', baselinkerController_1.baseLinkerController.getInventoryDetails);
 exports.default = router;

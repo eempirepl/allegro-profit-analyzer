@@ -99,3 +99,51 @@ npm run build
 ## Licencja
 
 Copyright © 2025 
+
+# Przygotowanie środowiska do implementacji planu
+
+## Podsumowanie wykonanych kroków
+
+1. **Utworzenie modułu do limitowania zapytań API**:
+   - Utworzono plik `backend/src/utils/queue.ts` z implementacją mechanizmu limitowania zapytań API BaseLinker
+   - Użyto biblioteki Bottleneck do obsługi limitów (100 zapytań na minutę)
+   - Dodano logowanie zdarzeń i obsługę błędów
+
+2. **Refaktoryzacja serwisu BaseLinker**:
+   - Zmodyfikowano plik `backend/src/services/baseLinkerService.ts` 
+   - Zastąpiono bezpośrednie użycie Bottleneck nową implementacją z `queue.ts`
+   - Zmieniono funkcję `makeBaseLinkerRequest` do korzystania z `executeWithRateLimit`
+
+3. **Poprawki w konfiguracji bazy danych**:
+   - Zaktualizowano plik `backend/src/config/db.ts`
+   - Poprawiono eksport `mockPrisma` jako `prisma` dla kontrolerów
+
+4. **Poprawki w kontrolerach**:
+   - Zaktualizowano importy w kontrolerach, aby używały poprawnie eksportowanego obiektu `prisma`
+   - Naprawiono pliki `productController.ts`, `orderController.ts`, `allegroController.ts`
+
+5. **Kompilacja i testy**:
+   - Skompilowano projekt za pomocą TypeScript
+   - Zweryfikowano obecność skompilowanych plików w katalogu `dist`
+   - Pomyślnie uruchomiono backend w trybie deweloperskim
+
+## Stan przygotowania
+
+Środowisko zostało pomyślnie skonfigurowane do wdrożenia planu implementacji:
+
+1. ✅ Mechanizm limitowania zapytań API jest gotowy
+2. ✅ Serwis BaseLinker został zrefaktoryzowany do użycia nowego mechanizmu limitowania
+3. ✅ Struktura bazy danych i kontrolery zostały poprawione
+4. ✅ Kompilacja TypeScript działa poprawnie
+5. ✅ Backend uruchamia się bez błędów
+
+### Następne kroki
+
+Zgodnie z planem implementacji, kolejne kroki to:
+
+1. Implementacja kontrolerów produktów, zamówień i elementów zamówień
+2. Implementacja serwisu synchronizacji danych
+3. Integracja endpointów w aplikacji Express
+4. Implementacja frontendu (hooki, komponenty, strony)
+
+Teraz zespół może przystąpić do realizacji planu, mając przygotowane podstawowe narzędzia i mechanizmy niezbędne do komunikacji z API BaseLinker zgodnie z ograniczeniami dotyczącymi limitów zapytań. 

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dataSyncService = void 0;
+exports.dataSyncService = exports.DataSyncService = void 0;
 const baseLinkerService_1 = require("./baseLinkerService");
 const logger_1 = require("../utils/logger");
 const db_1 = require("../config/db");
@@ -9,15 +9,26 @@ class DataSyncService {
     async syncProducts() {
         try {
             logger_1.logger.info('Rozpoczęcie synchronizacji produktów');
-            const productsResponse = await baseLinkerService_1.baseLinkerService.getProducts({});
-            const products = productsResponse.data.products;
-            const result = {
-                created: 0,
-                updated: 0,
-                errors: 0
-            };
+            const inventoryId = process.env.BASELINKER_INVENTORY_ID || '';
+            if (!inventoryId) {
+                throw new Error('Nie skonfigurowano BASELINKER_INVENTORY_ID');
+            }
+            // Pobierz produkty z BaseLinker
+            const productsResponse = await baseLinkerService_1.baseLinkerService.getProducts({
+                inventory_id: inventoryId
+            });
+            const products = Object.values(productsResponse.data.products || {});
+            // Pobierz szczegóły produktów
+            const productIds = products.map(p => Number(p.id));
+            const productDetails = await baseLinkerService_1.baseLinkerService.getProductDetails({
+                inventory_id: inventoryId,
+                products: productIds
+            });
+            // Dla każdego produktu...
             for (const product of products) {
                 try {
+                    const productDetail = productDetails.data.products[product.id];
+                    // Sprawdź czy produkt już istnieje (po external_id)
                     const existingProduct = await db_1.prisma.product.findUnique({
                         where: { externalId: String(product.id) }
                     });
@@ -25,33 +36,30 @@ class DataSyncService {
                         name: product.name,
                         sku: product.sku || undefined,
                         ean: product.ean || undefined,
-                        purchasePrice: product.purchase_price ? Number(product.purchase_price) : undefined,
+                        purchasePrice: productDetail?.average_cost ? Number(productDetail.average_cost) : undefined,
                         externalId: String(product.id)
                     };
                     if (existingProduct) {
+                        // Aktualizuj istniejący produkt
                         await db_1.prisma.product.update({
                             where: { id: existingProduct.id },
                             data: productData
                         });
-                        result.updated++;
                     }
                     else {
+                        // Utwórz nowy produkt
                         await db_1.prisma.product.create({
-                            data: {
-                                ...productData,
-                                name: product.name // name jest wymagane przy tworzeniu
-                            }
+                            data: productData
                         });
-                        result.created++;
                     }
                 }
                 catch (error) {
-                    logger_1.logger.error(`Błąd podczas synchronizacji produktu ${product.id}:`, error);
-                    result.errors++;
+                    logger_1.logger.error(`Błąd podczas przetwarzania produktu ${product.id}:`, error);
+                    // Kontynuuj z następnym produktem
+                    continue;
                 }
             }
-            logger_1.logger.info(`Synchronizacja produktów zakończona. Utworzono: ${result.created}, Zaktualizowano: ${result.updated}, Błędy: ${result.errors}`);
-            return result;
+            logger_1.logger.info('Synchronizacja produktów zakończona pomyślnie');
         }
         catch (error) {
             logger_1.logger.error('Błąd podczas synchronizacji produktów:', error);
@@ -62,89 +70,79 @@ class DataSyncService {
     async syncOrders(dateFrom, dateTo) {
         try {
             logger_1.logger.info('Rozpoczęcie synchronizacji zamówień');
-            const orders = await baseLinkerService_1.baseLinkerService.getOrders({ dateFrom, dateTo });
-            const result = {
-                created: 0,
-                updated: 0,
-                errors: 0,
-                items: {
-                    created: 0,
-                    updated: 0,
-                    errors: 0
-                }
-            };
+            // Pobierz zamówienia z BaseLinker
+            const ordersResponse = await baseLinkerService_1.baseLinkerService.getOrders({ dateFrom, dateTo });
+            const orders = ordersResponse.data.orders;
+            // Dla każdego zamówienia...
             for (const order of orders) {
                 try {
+                    // Sprawdź czy zamówienie już istnieje (po external_id)
                     const existingOrder = await db_1.prisma.order.findUnique({
-                        where: { externalId: order.order_id }
+                        where: { externalId: String(order.order_id) }
                     });
+                    // Pobierz szczegóły zamówienia
+                    const orderDetails = await baseLinkerService_1.baseLinkerService.getOrderDetails(order.order_id);
                     const orderData = {
-                        externalId: order.order_id,
+                        externalId: String(order.order_id),
                         orderDate: new Date(order.date_add * 1000),
-                        status: String(order.status_id), // Konwersja na string
-                        totalAmount: order.delivery_price || 0,
-                        shippingCost: order.delivery_price || undefined
+                        status: order.status_id ? String(order.status_id) : undefined,
+                        totalAmount: Number(order.delivery_price) || 0
                     };
-                    let orderId;
+                    let dbOrder;
                     if (existingOrder) {
-                        await db_1.prisma.order.update({
+                        // Aktualizuj istniejące zamówienie
+                        const updatedOrder = await db_1.prisma.order.update({
                             where: { id: existingOrder.id },
                             data: orderData
                         });
-                        orderId = existingOrder.id;
-                        result.updated++;
-                    }
-                    else {
-                        const newOrder = await db_1.prisma.order.create({
-                            data: orderData
-                        });
-                        orderId = newOrder.id;
-                        result.created++;
-                    }
-                    // Synchronizacja pozycji zamówienia
-                    const orderItems = await baseLinkerService_1.baseLinkerService.getOrderItems(order.order_id);
-                    for (const item of orderItems) {
+                        dbOrder = { id: updatedOrder.id };
+                        // Usuń stare pozycje zamówienia
                         try {
-                            const existingItems = await db_1.prisma.orderItem.findMany({
-                                where: {
-                                    orderId,
-                                    externalId: item.product_id
-                                },
-                                take: 1
+                            const items = await db_1.prisma.orderItem.findMany({
+                                where: { orderId: existingOrder.id }
                             });
-                            const itemData = {
-                                orderId,
-                                externalId: item.product_id,
-                                quantity: item.quantity,
-                                price: item.price_brutto
-                            };
-                            if (existingItems.length > 0) {
-                                await db_1.prisma.orderItem.update({
-                                    where: { id: existingItems[0].id },
-                                    data: itemData
+                            for (const item of items) {
+                                await db_1.prisma.orderItem.delete({
+                                    where: { id: item.id }
                                 });
-                                result.items.updated++;
-                            }
-                            else {
-                                await db_1.prisma.orderItem.create({
-                                    data: itemData
-                                });
-                                result.items.created++;
                             }
                         }
                         catch (error) {
-                            logger_1.logger.error(`Błąd podczas synchronizacji pozycji zamówienia ${order.order_id}:`, error);
-                            result.items.errors++;
+                            logger_1.logger.error(`Błąd podczas usuwania pozycji zamówienia ${existingOrder.id}:`, error);
+                        }
+                    }
+                    else {
+                        // Utwórz nowe zamówienie
+                        const createdOrder = await db_1.prisma.order.create({
+                            data: orderData
+                        });
+                        dbOrder = { id: createdOrder.id };
+                    }
+                    // Dodaj nowe pozycje zamówienia
+                    for (const item of orderDetails.data.items) {
+                        const orderItemData = {
+                            orderId: dbOrder.id,
+                            quantity: Number(item.quantity),
+                            price: Number(item.price_brutto),
+                            productId: item.product_id ? parseInt(item.product_id) : undefined
+                        };
+                        try {
+                            await db_1.prisma.orderItem.create({
+                                data: orderItemData
+                            });
+                        }
+                        catch (error) {
+                            logger_1.logger.error(`Błąd podczas dodawania pozycji zamówienia ${dbOrder.id}:`, error);
                         }
                     }
                 }
                 catch (error) {
-                    logger_1.logger.error(`Błąd podczas synchronizacji zamówienia ${order.order_id}:`, error);
-                    result.errors++;
+                    logger_1.logger.error(`Błąd podczas przetwarzania zamówienia ${order.order_id}:`, error);
+                    // Kontynuuj z następnym zamówieniem
+                    continue;
                 }
             }
-            logger_1.logger.info(`Synchronizacja zamówień zakończona. Zamówienia - Utworzono: ${result.created}, Zaktualizowano: ${result.updated}, Błędy: ${result.errors}. Pozycje - Utworzono: ${result.items.created}, Zaktualizowano: ${result.items.updated}, Błędy: ${result.items.errors}`);
-            return result;
+            logger_1.logger.info('Synchronizacja zamówień zakończona pomyślnie');
         }
         catch (error) {
             logger_1.logger.error('Błąd podczas synchronizacji zamówień:', error);
@@ -155,12 +153,9 @@ class DataSyncService {
     async syncAll(dateFrom, dateTo) {
         try {
             logger_1.logger.info('Rozpoczęcie pełnej synchronizacji danych');
-            const productsResult = await this.syncProducts();
-            const ordersResult = await this.syncOrders(dateFrom, dateTo);
-            return {
-                products: productsResult,
-                orders: ordersResult
-            };
+            await this.syncProducts();
+            await this.syncOrders(dateFrom, dateTo);
+            logger_1.logger.info('Pełna synchronizacja zakończona pomyślnie');
         }
         catch (error) {
             logger_1.logger.error('Błąd podczas pełnej synchronizacji:', error);
@@ -168,4 +163,5 @@ class DataSyncService {
         }
     }
 }
+exports.DataSyncService = DataSyncService;
 exports.dataSyncService = new DataSyncService();

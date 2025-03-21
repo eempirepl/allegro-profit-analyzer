@@ -112,19 +112,19 @@ export const syncProducts = async (req: Request, res: Response): Promise<void> =
     let created = 0;
     
     // Przetwórz każdy produkt
-    for (const blProduct of baseLinkerProducts.data.products || []) {
+    for (const blProduct of Object.values(baseLinkerProducts.products) || []) {
       try {
         // Sprawdź czy produkt już istnieje (po external_id)
         const existingProduct = await prisma.product.findFirst({
-          where: { externalId: String(blProduct.id) }
+          where: { externalId: String(blProduct.product_id) }
         });
         
         const productData = {
           name: blProduct.name,
           sku: blProduct.sku || undefined,
           ean: blProduct.ean || undefined,
-          purchasePrice: blProduct.purchase_price ? Number(blProduct.purchase_price) : undefined,
-          externalId: String(blProduct.id)
+          purchasePrice: undefined, // W nowym typie BaseLinkerProductBasic nie ma purchase_price
+          externalId: String(blProduct.product_id)
         };
         
         if (existingProduct) {
@@ -142,7 +142,7 @@ export const syncProducts = async (req: Request, res: Response): Promise<void> =
           created++;
         }
       } catch (error) {
-        logger.error(`Błąd podczas przetwarzania produktu ${blProduct.id}:`, error);
+        logger.error(`Błąd podczas przetwarzania produktu ${blProduct.product_id}:`, error);
         // Kontynuuj z następnym produktem
         continue;
       }

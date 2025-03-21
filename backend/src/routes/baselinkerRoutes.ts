@@ -16,6 +16,8 @@ router.get('/orders/:orderId/items', baseLinkerController.getOrderItems);
 router.get('/sync', baseLinkerController.syncData);
 router.get('/test-connection', baseLinkerController.testConnection);
 
+// Magazyny
 router.get('/inventories', baseLinkerController.getInventories);
+router.get('/inventories/:id', baseLinkerController.getInventoryDetails);
 
 export default router; 

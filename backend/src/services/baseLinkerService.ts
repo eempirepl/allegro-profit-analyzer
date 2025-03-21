@@ -7,7 +7,10 @@ import {
   OrdersResponseData, 
   OrderDetailsResponseData,
   BaseLinkerError,
-  InventoriesResponseData
+  InventoriesResponseData,
+  ProductsListResponse,
+  ProductsDataResponse,
+  BaseLinkerProductDetail
 } from '../types/baseLinkerTypes';
 
 class BaseLinkerService {
@@ -60,22 +63,23 @@ class BaseLinkerService {
     }
   }
 
-  // Pobieranie produktów
-  async getProducts(options: { page?: number; limit?: number; inventoryId?: string } = {}): Promise<ProductsResponseData> {
+  // Pobieranie listy produktów
+  async getProducts(options: { page?: number; limit?: number; inventoryId?: string } = {}): Promise<ProductsListResponse> {
     try {
       const { page = 1, limit = 100, inventoryId } = options;
       
+      if (!inventoryId) {
+        throw new Error('Nie podano ID magazynu');
+      }
+      
       const parameters: Record<string, any> = {
+        inventory_id: inventoryId,
         page,
         limit
       };
       
-      if (inventoryId) {
-        parameters.inventory_id = inventoryId;
-      }
-      
-      const response = await this.makeRequest<ProductsResponseData>('getInventoryProductsList', parameters);
-      logger.info(`Pobrano ${response.data.products.length} produktów`);
+      const response = await this.makeRequest<ProductsListResponse>('getInventoryProductsList', parameters);
+      logger.info(`Pobrano ${response.products ? Object.keys(response.products).length : 0} produktów`);
       return response;
     } catch (error) {
       logger.error('Błąd podczas pobierania produktów:', error);
@@ -83,22 +87,31 @@ class BaseLinkerService {
     }
   }
 
-  // Pobieranie szczegółów produktu
-  async getProductDetails(productId: string, inventoryId?: string): Promise<any> {
+  // Pobieranie szczegółowych danych produktu
+  async getProductDetails(productId: string, inventoryId: string): Promise<BaseLinkerProductDetail> {
     try {
-      const parameters: Record<string, any> = {
-        product_id: productId
-      };
-      
-      if (inventoryId) {
-        parameters.inventory_id = inventoryId;
+      if (!inventoryId) {
+        throw new Error('Nie podano ID magazynu');
       }
-      
-      const response = await this.makeRequest<any>('getInventoryProductsData', parameters);
-      logger.info(`Pobrano szczegóły produktu ID: ${productId}`);
-      return response;
+
+      const parameters = {
+        inventory_id: inventoryId,
+        products: [productId],
+        include_erp_units: true,
+        include_wms_units: true,
+        include_additional_eans: true
+      };
+
+      const response = await this.makeRequest<ProductsDataResponse>('getInventoryProductsData', parameters);
+      if (response && response.products && response.products[productId]) {
+        logger.info(`Pobrano szczegółowe dane produktu ${productId}`);
+        return response.products[productId];
+      } else {
+        logger.error(`Produkt ${productId} nie został znaleziony`);
+        throw new Error(`Produkt ${productId} nie został znaleziony`);
+      }
     } catch (error) {
-      logger.error(`Błąd podczas pobierania szczegółów produktu ${productId}:`, error);
+      logger.error(`Błąd podczas pobierania szczegółowych danych produktu ${productId}:`, error);
       throw error;
     }
   }
@@ -159,7 +172,7 @@ class BaseLinkerService {
       
       // Pobierz produkty
       const productsResponse = await this.getProducts();
-      const products = productsResponse.data.products;
+      const products = productsResponse.products;
       
       // Pobierz zamówienia
       const ordersResponse = await this.getOrders({ dateFrom, dateTo });

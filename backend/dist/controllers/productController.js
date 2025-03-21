@@ -100,14 +100,28 @@ exports.deleteProduct = deleteProduct;
 const syncProducts = async (req, res) => {
     try {
         logger_1.logger.info('Rozpoczęcie synchronizacji produktów z BaseLinker');
+        const inventoryId = process.env.BASELINKER_INVENTORY_ID || '';
+        if (!inventoryId) {
+            throw new Error('Nie skonfigurowano BASELINKER_INVENTORY_ID');
+        }
         // Pobierz produkty z BaseLinker
-        const baseLinkerProducts = await baseLinkerService_1.baseLinkerService.getProducts({});
+        const baseLinkerProducts = await baseLinkerService_1.baseLinkerService.getProducts({
+            inventory_id: inventoryId
+        });
         // Licznik zaktualizowanych i dodanych produktów
         let updated = 0;
         let created = 0;
         // Przetwórz każdy produkt
-        for (const blProduct of baseLinkerProducts.data.products || []) {
+        const products = Object.values(baseLinkerProducts.data.products || {});
+        // Pobierz szczegóły produktów
+        const productIds = products.map(p => Number(p.id));
+        const productDetails = await baseLinkerService_1.baseLinkerService.getProductDetails({
+            inventory_id: inventoryId,
+            products: productIds
+        });
+        for (const blProduct of products) {
             try {
+                const productDetail = productDetails.data.products[blProduct.id];
                 // Sprawdź czy produkt już istnieje (po external_id)
                 const existingProduct = await db_1.prisma.product.findFirst({
                     where: { externalId: String(blProduct.id) }
@@ -116,7 +130,7 @@ const syncProducts = async (req, res) => {
                     name: blProduct.name,
                     sku: blProduct.sku || undefined,
                     ean: blProduct.ean || undefined,
-                    purchasePrice: blProduct.purchase_price ? Number(blProduct.purchase_price) : undefined,
+                    purchasePrice: productDetail?.average_cost ? Number(productDetail.average_cost) : undefined,
                     externalId: String(blProduct.id)
                 };
                 if (existingProduct) {

@@ -1,91 +1,87 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.syncProducts = exports.getProducts = void 0;
+exports.productsController = void 0;
+const baseLinkerService_1 = require("../services/baseLinkerService");
 const logger_1 = require("../utils/logger");
-const baseLinkerService_1 = __importDefault(require("../services/baseLinkerService"));
-/**
- * Pobiera wszystkie produkty magazynowe
- */
-const getProducts = async (req, res) => {
-    try {
-        // Pobieramy ID magazynu z zapytania lub używamy domyślnego
-        // Prawdopodobnie ID 33644 nie jest poprawne, możemy użyć 0 do pobierania ze wszystkich magazynów
-        const inventoryId = req.query.inventory_id || '0';
-        logger_1.logger.info(`Pobieranie produktów magazynowych z inventoryId=${inventoryId}`);
-        // Pobieranie wszystkich produktów z obsługą paginacji
-        const productsData = await baseLinkerService_1.default.getAllInventoryProducts(inventoryId);
-        // Mapowanie danych produktów do formatu oczekiwanego przez frontend
-        const products = Object.entries(productsData.products || {}).map(([productId, product]) => {
-            return {
-                id: parseInt(productId),
-                sku: product.sku || '',
-                ean: product.ean || '',
-                name: product.text_fields?.name || '',
-                average_cost: product.average_cost || null,
-                stock: baseLinkerService_1.default.calculateTotalStock(product),
+exports.productsController = {
+    // Pobieranie listy produktów
+    async getProducts(req, res) {
+        try {
+            const page = Number(req.query.page) || 1;
+            const inventoryId = req.query.inventoryId;
+            if (!inventoryId) {
+                const errorResponse = {
+                    success: false,
+                    error: 'Nie podano ID magazynu'
+                };
+                return res.status(400).json(errorResponse);
+            }
+            logger_1.logger.info('Rozpoczynam pobieranie listy produktów', { page, inventoryId });
+            const response = await baseLinkerService_1.baseLinkerService.getProducts({
+                inventory_id: inventoryId,
+                page
+            });
+            const products = Object.values(response.data.products);
+            logger_1.logger.info(`Pobrano ${products.length} produktów`);
+            const apiResponse = {
+                success: true,
+                data: products,
+                pagination: {
+                    page,
+                    limit: 1000, // BaseLinker zwraca maksymalnie 1000 produktów na stronę
+                    total: products.length
+                }
             };
-        });
-        logger_1.logger.info(`Pobrano ${products.length} produktów magazynowych`);
-        res.status(200).json({
-            success: true,
-            count: products.length,
-            products: products
-        });
-    }
-    catch (error) {
-        logger_1.logger.error(`Błąd podczas pobierania produktów magazynowych: ${error.message || error}`);
-        res.status(500).json({
-            success: false,
-            error: 'Błąd podczas pobierania produktów magazynowych',
-            details: error.message || String(error)
-        });
-    }
-};
-exports.getProducts = getProducts;
-/**
- * Synchronizuje produkty magazynowe z BaseLinker
- */
-const syncProducts = async (req, res) => {
-    try {
-        // Pobieramy ID magazynu z zapytania lub używamy domyślnego
-        // Prawdopodobnie ID 33644 nie jest poprawne, możemy użyć 0 do pobierania ze wszystkich magazynów
-        const inventoryId = req.query.inventory_id || '0';
-        logger_1.logger.info(`Rozpoczęcie synchronizacji produktów magazynowych z inventoryId=${inventoryId}`);
-        // Pobieranie wszystkich produktów
-        const productsData = await baseLinkerService_1.default.getAllInventoryProducts(inventoryId);
-        // Mapowanie danych produktów
-        const products = Object.entries(productsData.products || {}).map(([productId, product]) => {
-            return {
-                id: parseInt(productId),
-                sku: product.sku || '',
-                ean: product.ean || '',
-                name: product.text_fields?.name || '',
-                average_cost: product.average_cost || null,
-                stock: baseLinkerService_1.default.calculateTotalStock(product),
+            res.json(apiResponse);
+        }
+        catch (error) {
+            logger_1.logger.error('Błąd podczas pobierania produktów:', error);
+            const errorResponse = {
+                success: false,
+                error: 'Wystąpił błąd podczas pobierania produktów'
             };
-        });
-        logger_1.logger.info(`Zsynchronizowano ${products.length} produktów magazynowych`);
-        res.status(200).json({
-            success: true,
-            message: `Zsynchronizowano ${products.length} produktów magazynowych`,
-            count: products.length,
-            products: products
-        });
+            res.status(500).json(errorResponse);
+        }
+    },
+    // Pobieranie szczegółów produktu
+    async getProductDetails(req, res) {
+        try {
+            const { productId } = req.params;
+            const inventoryId = req.query.inventoryId;
+            if (!productId || !inventoryId) {
+                const errorResponse = {
+                    success: false,
+                    error: 'Nie podano ID produktu lub magazynu'
+                };
+                return res.status(400).json(errorResponse);
+            }
+            logger_1.logger.info('Rozpoczynam pobieranie szczegółów produktu', { productId, inventoryId });
+            const response = await baseLinkerService_1.baseLinkerService.getProductDetails({
+                inventory_id: inventoryId,
+                products: [Number(productId)]
+            });
+            const product = response.data.products[productId];
+            if (!product) {
+                const errorResponse = {
+                    success: false,
+                    error: 'Nie znaleziono produktu o podanym ID'
+                };
+                return res.status(404).json(errorResponse);
+            }
+            logger_1.logger.info('Pobrano szczegóły produktu', { productId });
+            const apiResponse = {
+                success: true,
+                data: product
+            };
+            res.json(apiResponse);
+        }
+        catch (error) {
+            logger_1.logger.error(`Błąd podczas pobierania szczegółów produktu ${req.params.productId}:`, error);
+            const errorResponse = {
+                success: false,
+                error: 'Wystąpił błąd podczas pobierania szczegółów produktu'
+            };
+            res.status(500).json(errorResponse);
+        }
     }
-    catch (error) {
-        logger_1.logger.error(`Błąd podczas synchronizacji produktów magazynowych: ${error.message || error}`);
-        res.status(500).json({
-            success: false,
-            error: 'Błąd podczas synchronizacji produktów magazynowych',
-            details: error.message || String(error)
-        });
-    }
-};
-exports.syncProducts = syncProducts;
-exports.default = {
-    getProducts: exports.getProducts,
-    syncProducts: exports.syncProducts
 };
