@@ -44,7 +44,7 @@ model Order {
 
 model OrderItem {
   id                Int               @id @default(autoincrement())
-  externalId        String?
+  externalId        String?           @unique
   productId         Int?
   orderId           Int
   quantity          Int

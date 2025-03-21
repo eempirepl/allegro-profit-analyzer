@@ -1,52 +1,60 @@
-export interface Product {
+// Typy błędów
+export interface BaseLinkerError {
+  error_code: string;
+  error_message?: string;
+}
+
+// Typy produktów
+export interface BaseLinkerProduct {
   id: string;
   sku: string;
-  ean: string;
   name: string;
   quantity: number;
   price: number;
+  ean: string;
+  purchase_price: string;
+  prices: {
+    [key: string]: number;
+  };
+  locations: {
+    [key: string]: number;
+  };
   tax_rate: number;
   weight: number;
   description: string;
   description_extra1: string;
   description_extra2: string;
-  description_extra3: string;
-  description_extra4: string;
-  man_name: string;
-  man_image: string;
-  category_id: string;
   images: string[];
-  features: Record<string, string>;
-  variants: Record<string, any>;
-  options: Record<string, any>;
-  text_fields: {
+  categories: string[];
+  features: {
     name: string;
-    description: string;
-  };
-  average_cost: number | null;
-  stock: Record<string, number>;
+    value: string;
+  }[];
+  variants: {
+    variant_id: string;
+    name: string;
+    sku: string;
+    quantity: number;
+    price: number;
+  }[];
 }
 
-export interface Order {
+// Typy zamówień
+export interface BaseLinkerOrder {
   order_id: string;
-  external_order_id: string;
-  order_source: string;
-  order_source_id: string;
-  order_status_id: string;
   date_add: number;
   date_confirmed: number;
   date_in_status: number;
   user_login: string;
-  phone: string;
   email: string;
-  user_comments: string;
-  admin_comments: string;
+  phone: string;
+  status_id: number;
   currency: string;
   payment_method: string;
   payment_method_cod: boolean;
   payment_done: number;
   delivery_method: string;
-  delivery_price: string;
+  delivery_price: number;
   delivery_fullname: string;
   delivery_company: string;
   delivery_address: string;
@@ -68,38 +76,66 @@ export interface Order {
   want_invoice: boolean;
   extra_field_1: string;
   extra_field_2: string;
-  custom_extra_fields: Record<string, string>;
   order_page: string;
-  products: OrderProduct[];
+  pick_state: number;
+  pack_state: number;
+  source_id: number;
 }
 
-export interface OrderProduct {
-  storage: string;
-  storage_id: string;
-  order_product_id: string;
+// Typy pozycji zamówienia
+export interface BaseLinkerOrderItem {
+  order_id: string;
   product_id: string;
   variant_id: string;
   name: string;
   sku: string;
-  ean: string;
-  location: string;
-  warehouse_id: string;
-  attributes: string;
-  price_brutto: string;
-  tax_rate: string;
+  price_brutto: number;
+  tax_rate: number;
   quantity: number;
   weight: number;
-  bundle_id: string;
 }
 
-export interface OrderItem {
-  order_id: string;
-  product_id: string;
-  name: string;
-  price_brutto: string;
-  tax_rate: string;
-  quantity: number;
-  currency: string;
-  value_in_pln: string;
-  auction_id: string;
-} 
+// Typy dla parametrów zapytań
+export interface GetProductsParams {
+  page?: number;
+  limit?: number;
+  inventoryId?: string;
+}
+
+export interface GetOrdersParams {
+  dateFrom?: number;
+  dateTo?: number;
+  statusId?: number;
+  page?: number;
+  limit?: number;
+}
+
+// Typy dla odpowiedzi API
+export interface BaseLinkerResponse<T> {
+  status: 'SUCCESS' | 'ERROR';
+  error_code?: string;
+  error_message?: string;
+  data: T;
+}
+
+// Odpowiedź dla listy produktów
+export interface ProductsResponseData {
+  products: BaseLinkerProduct[];
+  total: number;
+}
+
+// Odpowiedź dla listy zamówień
+export interface OrdersResponseData {
+  orders: BaseLinkerOrder[];
+  total: number;
+}
+
+// Odpowiedź dla szczegółów zamówienia
+export interface OrderDetailsResponseData {
+  order: BaseLinkerOrder;
+  items: BaseLinkerOrderItem[];
+}
+
+export type ProductsResponse = BaseLinkerResponse<ProductsResponseData>;
+export type OrdersResponse = BaseLinkerResponse<OrdersResponseData>;
+export type OrderDetailsResponse = BaseLinkerResponse<OrderDetailsResponseData>; 

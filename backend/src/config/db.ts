@@ -23,7 +23,7 @@ const config = {
   
   // Inne ustawienia konfiguracyjne
   environment: process.env.NODE_ENV || 'development',
-  port: process.env.PORT ? parseInt(process.env.PORT) : 3001,
+  port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3001,
 };
 
 interface Product {
@@ -87,13 +87,17 @@ class MockPrismaClient {
     findMany: async (): Promise<Product[]> => {
       return [];
     },
-    findUnique: async ({ where }: { where: { id: number } }): Promise<Product | null> => {
+    findUnique: async ({ where }: { where: { id?: number, externalId?: string } }): Promise<Product | null> => {
+      return null;
+    },
+    findFirst: async ({ where }: { where: { id?: number, externalId?: string } }): Promise<Product | null> => {
       return null;
     },
     create: async ({ data }: { data: Partial<Product> }): Promise<Product> => {
       return {
         id: 1,
         name: data.name || '',
+        externalId: data.externalId,
         createdAt: new Date(),
         updatedAt: new Date()
       };
@@ -110,14 +114,16 @@ class MockPrismaClient {
   };
   
   order = {
-    findMany: async ({ include, orderBy }: { 
+    findMany: async ({ include, orderBy, where, take }: { 
       include?: { items: boolean },
-      orderBy?: { orderDate: 'asc' | 'desc' }
+      orderBy?: { orderDate: 'asc' | 'desc' },
+      where?: { externalId?: string },
+      take?: number
     } = {}): Promise<Order[]> => {
       return [];
     },
     findUnique: async ({ where, include }: { 
-      where: { id: number },
+      where: { id?: number, externalId?: string },
       include?: { items: { include: { product: boolean } } }
     }): Promise<Order | null> => {
       return null;
@@ -152,9 +158,33 @@ class MockPrismaClient {
   };
   
   orderItem = {
-    findMany: async (): Promise<OrderItem[]> => {
+    findMany: async ({ where, take }: { 
+      where?: { orderId?: number, productId?: number, externalId?: string },
+      take?: number
+    } = {}): Promise<OrderItem[]> => {
       return [];
-    }
+    },
+    create: async ({ data }: { data: Partial<OrderItem> }): Promise<OrderItem> => {
+      return {
+        id: 1,
+        orderId: data.orderId || 1,
+        quantity: data.quantity || 1,
+        price: data.price || 0,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+    },
+    update: async ({ where, data }: { where: { id: number }, data: Partial<OrderItem> }): Promise<OrderItem> => {
+      return {
+        id: where.id,
+        orderId: data.orderId || 1,
+        quantity: data.quantity || 1,
+        price: data.price || 0,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+    },
+    delete: async ({ where }: { where: { id: number } }): Promise<void> => {}
   };
   
   allegroFee = {
@@ -219,5 +249,6 @@ export const testDatabaseConnection = async (): Promise<boolean> => {
   }
 };
 
-export { prisma };
+// Eksport mocka jako prisma do użycia w kontrolerach
+export { mockPrisma as prisma };
 export default config; 

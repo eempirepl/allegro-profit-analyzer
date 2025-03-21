@@ -13,7 +13,6 @@ const client_1 = require("@prisma/client");
 dotenv_1.default.config();
 // Utwórz instancję Prisma Client
 const prisma = new client_1.PrismaClient();
-exports.prisma = prisma;
 // Konfiguracja aplikacji
 const config = {
     // Token API BaseLinker (pobrany z zmiennych środowiskowych)
@@ -24,7 +23,7 @@ const config = {
     },
     // Inne ustawienia konfiguracyjne
     environment: process.env.NODE_ENV || 'development',
-    port: process.env.PORT ? parseInt(process.env.PORT) : 3001,
+    port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3001,
 };
 // Mocked Prisma Client
 class MockPrismaClient {
@@ -36,10 +35,14 @@ class MockPrismaClient {
             findUnique: async ({ where }) => {
                 return null;
             },
+            findFirst: async ({ where }) => {
+                return null;
+            },
             create: async ({ data }) => {
                 return {
                     id: 1,
                     name: data.name || '',
+                    externalId: data.externalId,
                     createdAt: new Date(),
                     updatedAt: new Date()
                 };
@@ -55,7 +58,7 @@ class MockPrismaClient {
             delete: async ({ where }) => { }
         };
         this.order = {
-            findMany: async ({ include, orderBy } = {}) => {
+            findMany: async ({ include, orderBy, where, take } = {}) => {
                 return [];
             },
             findUnique: async ({ where, include }) => {
@@ -84,9 +87,30 @@ class MockPrismaClient {
             delete: async ({ where }) => { }
         };
         this.orderItem = {
-            findMany: async () => {
+            findMany: async ({ where, take } = {}) => {
                 return [];
-            }
+            },
+            create: async ({ data }) => {
+                return {
+                    id: 1,
+                    orderId: data.orderId || 1,
+                    quantity: data.quantity || 1,
+                    price: data.price || 0,
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                };
+            },
+            update: async ({ where, data }) => {
+                return {
+                    id: where.id,
+                    orderId: data.orderId || 1,
+                    quantity: data.quantity || 1,
+                    price: data.price || 0,
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                };
+            },
+            delete: async ({ where }) => { }
         };
         this.allegroFee = {
             findMany: async ({ orderBy } = {}) => {
@@ -104,6 +128,7 @@ class MockPrismaClient {
 const logger_1 = require("../utils/logger");
 // Używamy naszego mocka zamiast prawdziwego PrismaClienta
 const mockPrisma = new MockPrismaClient();
+exports.prisma = mockPrisma;
 // Log zapytań SQL w trybie development
 if (process.env.NODE_ENV === 'development') {
     mockPrisma.$on('query', (e) => {

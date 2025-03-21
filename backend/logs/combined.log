@@ -404,3 +404,60 @@
 {"level":"info","message":"Pobrano 0 zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:49"}
 {"level":"info","message":"Pobrano kursy walut: 34 walut","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:49"}
 {"level":"info","message":"Zsynchronizowano łącznie 0 pozycji zamówień","service":"allegro-profit-analyzer","timestamp":"2025-03-19 19:50:49"}
+{"level":"info","message":"Serwer działa na porcie: 3001","service":"allegro-profit-analyzer","timestamp":"2025-03-20 13:29:21"}
+{"level":"info","message":"GET /","service":"allegro-profit-analyzer","timestamp":"2025-03-20 13:32:09"}
+{"level":"info","message":"GET /favicon.ico","service":"allegro-profit-analyzer","timestamp":"2025-03-20 13:32:09"}
+{"level":"info","message":"Serwer działa na porcie: 3001","service":"allegro-profit-analyzer","timestamp":"2025-03-20 13:36:27"}
+{"level":"info","message":"Serwer działa na porcie: 3001","service":"allegro-profit-analyzer","timestamp":"2025-03-20 13:39:58"}
+{"level":"info","message":"Serwer działa na porcie: 3001","service":"allegro-profit-analyzer","timestamp":"2025-03-20 13:40:41"}
+{"level":"info","message":"Serwer działa na porcie: 3001","service":"allegro-profit-analyzer","timestamp":"2025-03-20 13:41:52"}
+{"level":"info","message":"Serwer działa na porcie: 3001","service":"allegro-profit-analyzer","timestamp":"2025-03-20 13:42:26"}
+{"level":"info","message":"Serwer działa na porcie: 3001","service":"allegro-profit-analyzer","timestamp":"2025-03-20 13:43:12"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-20 13:43:12"}
+{"level":"info","message":"Serwer działa na porcie: 3002","service":"allegro-profit-analyzer","timestamp":"2025-03-20 14:21:01"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-20 14:21:01"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-20 14:22:16"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-20 14:22:16"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-20 14:23:02"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-20 14:23:02"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-20 15:22:27"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-20 15:22:27"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-20 15:23:40"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-20 15:23:40"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-20 15:24:59"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-20 15:24:59"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 10:33:36"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-21 10:33:36"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 10:35:56"}
+{"level":"info","message":"Port 3003 jest używany przez proces o PID 3608. Zwalniam...","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:10:43"}
+{"level":"info","message":"Port 3003 został zwolniony.","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:10:44"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:10:44"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:10:44"}
+{"level":"info","message":"Port 3003 jest używany przez proces o PID 13620. Zwalniam...","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:10:51"}
+{"level":"info","message":"Port 3003 został zwolniony.","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:10:52"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:10:52"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:10:52"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:11:46"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:11:46"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:12:17"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:12:17"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:13:46"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:13:46"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:14:20"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:14:20"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:14:52"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:14:52"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:16:05"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:16:05"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:16:47"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:16:47"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:17:21"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:17:21"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:20:35"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:20:35"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:21:09"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-21 11:21:09"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 12:01:33"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-21 12:01:33"}
+{"level":"info","message":"Serwer działa na porcie: 3003","service":"allegro-profit-analyzer","timestamp":"2025-03-21 12:02:13"}
+{"level":"info","message":"Środowisko: development","service":"allegro-profit-analyzer","timestamp":"2025-03-21 12:02:13"}
