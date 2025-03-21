@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { baseLinkerService } from '../services/baseLinkerService';
 import { logger } from '../utils/logger';
 
+// Kontroler BaseLinker
 export const baseLinkerController = {
   // Pobieranie listy produktów
   async getProducts(req: Request, res: Response) {
@@ -114,43 +115,14 @@ export const baseLinkerController = {
   // Synchronizacja danych
   async syncData(req: Request, res: Response) {
     try {
-      const dateFrom = req.query.dateFrom ? Number(req.query.dateFrom) : Math.floor(Date.now() / 1000) - 86400 * 30; // domyślnie ostatnie 30 dni
-      const dateTo = req.query.dateTo ? Number(req.query.dateTo) : Math.floor(Date.now() / 1000);
-
-      // Inicjujemy odpowiedź jako odpowiedź strumieniową
-      res.setHeader('Content-Type', 'text/event-stream');
-      res.setHeader('Cache-Control', 'no-cache');
-      res.setHeader('Connection', 'keep-alive');
-
-      // Informujemy o rozpoczęciu synchronizacji
-      res.write(`data: ${JSON.stringify({ status: 'start', message: 'Rozpoczęcie synchronizacji danych z BaseLinker' })}\n\n`);
-
-      // Wykonujemy synchronizację
-      const syncResult = await baseLinkerService.syncData(dateFrom, dateTo);
-
-      // Informujemy o zakończeniu synchronizacji
-      res.write(`data: ${JSON.stringify({ 
-        status: 'complete', 
-        message: 'Synchronizacja danych z BaseLinker zakończona pomyślnie', 
-        stats: {
-          products: syncResult.products.length,
-          orders: syncResult.orders.length,
-          orderItems: syncResult.orderItems.length
-        }
-      })}\n\n`);
+      const thirtyDaysAgo = Math.floor(Date.now() / 1000) - (30 * 24 * 60 * 60);
+      const now = Math.floor(Date.now() / 1000);
       
-      res.end();
+      const data = await baseLinkerService.syncData(thirtyDaysAgo, now);
+      res.json(data);
     } catch (error) {
       logger.error('Błąd podczas synchronizacji danych:', error);
-      
-      // W przypadku błędu również informujemy klienta
-      res.write(`data: ${JSON.stringify({ 
-        status: 'error', 
-        message: 'Błąd podczas synchronizacji danych z BaseLinker', 
-        error: error instanceof Error ? error.message : 'Nieznany błąd'
-      })}\n\n`);
-      
-      res.end();
+      res.status(500).json({ error: 'Błąd podczas synchronizacji danych' });
     }
   },
 
@@ -158,19 +130,23 @@ export const baseLinkerController = {
   async testConnection(req: Request, res: Response) {
     try {
       const isConnected = await baseLinkerService.testConnection();
-      if (isConnected) {
-        res.json({ success: true, message: 'Połączenie z BaseLinker API działa poprawnie' });
-      } else {
-        res.status(500).json({ 
-          success: false, 
-          error: 'Nie można połączyć się z BaseLinker API' 
-        });
-      }
+      res.json({ connected: isConnected });
     } catch (error) {
       logger.error('Błąd podczas testowania połączenia:', error);
+      res.status(500).json({ error: 'Błąd podczas testowania połączenia' });
+    }
+  },
+
+  // Pobieranie listy magazynów
+  async getInventories(req: Request, res: Response) {
+    try {
+      const inventories = await baseLinkerService.getInventories();
+      res.json({ success: true, data: inventories });
+    } catch (error) {
+      logger.error('Błąd podczas pobierania listy magazynów:', error);
       res.status(500).json({ 
         success: false, 
-        error: 'Wystąpił błąd podczas testowania połączenia' 
+        error: 'Błąd podczas pobierania listy magazynów' 
       });
     }
   }

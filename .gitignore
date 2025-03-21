@@ -35,4 +35,25 @@ next-env.d.ts
 
 # IDE
 .vscode/
-.idea/ 
+.idea/
+
+# Logi
+backend/logs/*
+
+# Next.js
+frontend/.next/
+frontend/out/
+
+# Pliki debugowania
+debug_session.txt
+cursor.rules
+
+# Pliki kompilacji
+backend/dist/
+
+# Środowisko
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local 
